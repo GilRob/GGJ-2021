@@ -9,9 +9,14 @@ public class CameraController : MonoBehaviour
     float xRotate = 0f;
 
     private float timer = 0.0f;
+    public float walkShakingSpeed;
+    public float walkShakingAmount;
+    public float runShakingSpeed;
+    public float runShakingAmount;
+    public float midp = 2.0f;
+
     public float shakingSpeed = 0.18f;
     public float shakingAmount = 0.2f;
-    public float midp = 2.0f;
 
     void Start()
     {
@@ -32,6 +37,17 @@ public class CameraController : MonoBehaviour
         player.Rotate(Vector3.up * x);
 
         // make camera shake when moving
+        if (player.GetComponent<PlayerController>().isRunning)
+        {
+            shakingSpeed = runShakingSpeed;
+            shakingAmount = runShakingAmount;
+        }
+        else
+        {
+            shakingSpeed = walkShakingSpeed;
+            shakingAmount = walkShakingAmount;
+        }
+
         float waveslice = 0.0f;
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
