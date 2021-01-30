@@ -37,15 +37,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 mLastPosition;
     public GameObject stamina;
     private bool recovering;
+    private bool inWheat;
+    private AudioSource wheatSource;
+    public AudioClip wheat;
+
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
         itemRB = new Rigidbody();
+        wheatSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        Debug.Log(recovering);
+        float speed = (transform.position - this.mLastPosition).magnitude / Time.deltaTime;
+        this.mLastPosition = transform.position;
+
+        Debug.Log(speed);
 
         // check if player on ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDis, groundMask);
@@ -166,6 +174,32 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Drop");
         }
 
+        if (inWheat == true)
+        {
+            wheatSource.clip = wheat;
+            wheatSource.loop = true;
+            wheatSource.Play();
+        }
+        else
+        {
+            wheatSource.Stop();
+        }
+        //wheat.volume = Mathf.Clamp(speed, 0, 10);
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Wheat")
+        {
+            inWheat = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Wheat")
+        {
+            inWheat = false;
+        }
     }
 }
