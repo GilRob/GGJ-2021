@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     public float walkingSpeed;
     public float runningSpeed;
     public float staminaReduceSpeed;
-    public float staminaBackupSpeed;
+    public float staminaBackupWalking;
+    public float staminaBackupStop;
     public Transform groundCheck;
     public float fallingSpeed = -18f;
     public float jumpHeight = 4f;
@@ -63,7 +64,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            fill.fillAmount += staminaBackupSpeed * Time.deltaTime;
+            if (x > 0 || y > 0)
+            {
+                fill.fillAmount += staminaBackupWalking * Time.deltaTime;
+            }
+            else
+            {
+                fill.fillAmount += staminaBackupStop * Time.deltaTime;
+            }
             bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
         }
 
