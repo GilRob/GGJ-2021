@@ -47,5 +47,21 @@ public class Tasks : MonoBehaviour
             Debug.Log("task complete");
             didHayroll = false;
         }
+
+        //Bring bucket to Chicken Coop
+        if(player.hitInfo.collider != null)
+        {
+            if(player.hitInfo.collider.name == "ChickenCoop")
+            {
+                if(Input.GetButtonDown("Interact") && player.currentItem.name == "bucket")
+                {
+                    Debug.Log("Fed the Chickens");
+                    taskList[2] = true;
+                    Destroy(player.currentItem);
+                    player.currentlyHolding = false;
+                    player.currentItem = new GameObject();
+                }
+            }
+        }
     }
 }
