@@ -87,7 +87,7 @@ Material:
     - _HeightBrightness: 0.25
     - _HeightSoftness: 1
     - _HeightSpread: 0.5
-    - _LowPoly: 1
+    - _LowPoly: 0
     - _Metallic: 0
     - _Mode: 0
     - _NormalScale: 1
