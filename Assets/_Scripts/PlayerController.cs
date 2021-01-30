@@ -1,6 +1,6 @@
 ﻿// Player movement: https://www.youtube.com/watch?v=_QajrabyTJc&ab_channel=Brackeys
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundMask;
     bool isGrounded;
 
+    RaycastHit hitInfo;
+
+    public Image cursor;
+    public Sprite baseCursor;
+    public Sprite InteractCursor;
+    public Sprite InvestigateCursor;
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
@@ -43,5 +49,29 @@ public class PlayerController : MonoBehaviour
 
         velocity.y += fallingSpeed * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 100.0f))
+        {
+            if(hitInfo.collider.tag == "Interactable")
+            {
+                cursor.rectTransform.sizeDelta = new Vector2(23,23);
+                cursor.sprite = InteractCursor;
+            }
+            else if(hitInfo.collider.tag == "Investigate")
+            {
+                cursor.rectTransform.sizeDelta = new Vector2(23, 23);
+                cursor.sprite = InvestigateCursor;
+            }
+            else
+            {
+                cursor.rectTransform.sizeDelta = new Vector2(5, 5);
+                cursor.sprite = baseCursor;
+            }
+
+            if(Input.GetButtonDown("Interact"))
+            {
+                Debug.Log("I was found");
+            }
+        }
     }
 }
