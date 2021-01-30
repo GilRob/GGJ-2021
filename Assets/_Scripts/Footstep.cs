@@ -4,110 +4,73 @@ using UnityEngine;
 
 public class Footstep : MonoBehaviour
 {
-    public CheckIfGrounded checkIfGrounded;
-    public CheckTerrain checkTerrainTexture;
 
-    public AudioSource audioSource;
+    [SerializeField]
+    private AudioClip[] stoneClips;
+    [SerializeField]
+    private AudioClip[] woodClips;
+    [SerializeField]
+    private AudioClip[] grassClips;
 
-    public AudioClip[] stoneClips;
-    public AudioClip[] dirtClips;
-    public AudioClip[] woodClips;
-    AudioClip previousClip;
-
-    CharacterController character;
-    float currentSpeed;
-    bool walking;
-    float distanceCovered;
-    public float modifier = 0.5f;
-
-    float airTime;
-    // Start is called before the first frame update
-    void Start()
-    {
-        character = gameObject.GetComponent<CharacterController>();
-    }
-
-    // Update is called once per frame
+    private AudioSource audioSource;
+    private float timer;
+    RaycastHit hit;
+    public Collider playerCollider;
+    public CharacterController controller;
+    private Vector3 mLastPosition;
     void Update()
     {
-        currentSpeed = GetPlayerSpeed();
-        walking = CheckIfWalking();
-        PlaySoundIfFalling();
+        float speed = (transform.position - this.mLastPosition).magnitude / Time.deltaTime;
+        this.mLastPosition = transform.position;
 
-        if (walking)
+        if (speed > 0)
         {
-            distanceCovered += (currentSpeed * Time.deltaTime) * modifier;
-            if (distanceCovered > 1)
+            timer += Time.deltaTime;
+            if (timer >= 0.5)
             {
-                TriggerNextClip();
-                distanceCovered = 0;
+                Step();
+                timer = 0;
             }
+           
         }
-    }
-
-    float GetPlayerSpeed()
-    {
-        float speed = character.velocity.magnitude;
-        return speed;
-    }
-
-    bool CheckIfWalking()
-    {
-        if (currentSpeed > 0 && checkIfGrounded.isGrounded)
-            return true;
         else
-            return false;
-    }
-
-    AudioClip GetClipFromArray(AudioClip[] clipArray)
-    {
-        int attempts = 3;
-        AudioClip selectedClip = clipArray[Random.Range(0, clipArray.Length - 1)];
-
-        while (selectedClip == previousClip && attempts > 0)
         {
-            selectedClip = clipArray[Random.Range(0, clipArray.Length - 1)];
-            attempts--;
+            timer = 0;
         }
-
-        previousClip = selectedClip;
-        return selectedClip;
+        Debug.Log(timer); 
+        //Debug.Log(Time.deltaTime);
     }
-
-    void TriggerNextClip()
+    private void Awake()
     {
-        audioSource.pitch = Random.Range(0.9f, 1.1f);
-        audioSource.volume = Random.Range(0.9f, 1.1f);
-
-        if (checkIfGrounded.isOnTerrain)
-        {
-            checkTerrainTexture.GetTerrainTexture();
-
-            if (checkTerrainTexture.textureValues[0] > 0)
-                audioSource.PlayOneShot(GetClipFromArray(stoneClips), checkTerrainTexture.textureValues[0]);
-            if (checkTerrainTexture.textureValues[1] > 0)
-                audioSource.PlayOneShot(GetClipFromArray(dirtClips), checkTerrainTexture.textureValues[1]);
-            if (checkTerrainTexture.textureValues[2] > 0)
-                audioSource.PlayOneShot(GetClipFromArray(dirtClips), checkTerrainTexture.textureValues[2]);
-            if (checkTerrainTexture.textureValues[3] > 0)
-                audioSource.PlayOneShot(GetClipFromArray(dirtClips), checkTerrainTexture.textureValues[3]);
-            else
-                audioSource.PlayOneShot(GetClipFromArray(stoneClips), 1);
-        }
+        audioSource = GetComponent<AudioSource>();
     }
 
-    void PlaySoundIfFalling()
+    private void Step()
     {
-        if (!checkIfGrounded.isGrounded)
-        {
-            airTime += Time.deltaTime;
-        } else
-        {
-            if (airTime > 0.25f)
-            {
-                TriggerNextClip();
-                airTime = 0;
-            }
-        }
+        checkHit();
+        AudioClip clip = GetRandomClip();
+        audioSource.PlayOneShot(clip);
     }
+
+    bool checkHit()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, out hit, playerCollider.bounds.extents.y + 0.5f);
+    }
+
+    private AudioClip GetRandomClip()
+    {
+        Debug.Log(grassClips.Length);
+        //Debug.Log(hit.collider.tag);
+        if (hit.collider != null && hit.collider.tag == "Stone")
+            return stoneClips[UnityEngine.Random.Range(0, stoneClips.Length)];
+        if (hit.collider != null && hit.collider.tag == "Wood")
+            return woodClips[UnityEngine.Random.Range(0, woodClips.Length)];
+        if (hit.collider != null && hit.collider.tag == "Dirt")
+            return grassClips[UnityEngine.Random.Range(0, grassClips.Length)];
+        else
+            return grassClips[UnityEngine.Random.Range(0, grassClips.Length)];
+
+    }
+
 }
+
