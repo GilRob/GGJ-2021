@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
     public Transform holdPosition;
     bool currentlyHolding = false;
     Rigidbody itemRB;
+    private Vector3 mLastPosition;
+    public GameObject stamina;
+    private bool recovering;
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
@@ -42,6 +45,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(recovering);
+
         // check if player on ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDis, groundMask);
         if(isGrounded && velocity.y < 0)
@@ -64,10 +69,21 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
         }
 
+        if (recovering == false)
+            stamina.active = false;
+        else
+            stamina.active = true;
+
         if (fill.fillAmount <= 0.01f)
         {
             isRunning = false;
         }
+
+        if (fill.fillAmount >= 1)
+            recovering = false;
+        else if (fill.fillAmount < 1)
+            recovering = true;
+
         if (isRunning)
         {
             fill.fillAmount -= staminaReduceSpeed * Time.deltaTime;
@@ -149,5 +165,7 @@ public class PlayerController : MonoBehaviour
             currentlyHolding = false;
             Debug.Log("Drop");
         }
+
+
     }
 }
