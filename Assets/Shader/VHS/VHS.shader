@@ -32,14 +32,14 @@
 				float dy = 1-abs(distance(i.uv.y, _yScanline));
 				
 				//float x = ((int)(i.uv.x*320))/320.0;
-				dy = ((int)(dy*15))/15.0;
-				dy = dy;
-				i.uv.x += dy * 0.025 + rand(float3(dy,dy,dy)).r/500;//0.025;
+				//dy = ((int)(dy*15))/15.0;
+				//dy = dy;
+				//i.uv.x += dy * 0.025 + rand(float3(dy,dy,dy)).r/500;//0.025;
 				
-				float white = (vhs.r+vhs.g+vhs.b)/3;
+				//float white = (vhs.r+vhs.g+vhs.b)/3;
 				
-				if(dx > 0.99)
-					i.uv.y = _xScanline;
+				///if(dx > 0.99)
+				//	i.uv.y = _xScanline;
 				//i.uv.y = step(0.99, dy) * (_yScanline) + step(dy, 0.99) * i.uv.y;
 				
 				i.uv.x = i.uv.x % 1;
