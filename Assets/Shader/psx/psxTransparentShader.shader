@@ -7,8 +7,9 @@ Shader "Custom/psxTransparentShader"
 		_MainTex("Base (RGB)", 2D) = "white" {}
 	}
 		SubShader{
-		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
+		Tags{ "Queue" = "Transparent" "IgnoreProjector"="True" "RenderType" = "Transparent" }
 		LOD 200
+		ZWrite off
 		Cull off
 		Blend SrcAlpha OneMinusSrcAlpha
 		Pass{
