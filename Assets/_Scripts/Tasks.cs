@@ -41,6 +41,11 @@ public class Tasks : MonoBehaviour
         }
 
         //Roll Hayroll to Spot *collision code in chekCollision.cs*
+        if(Vector3.Distance(this.transform.position, Hayroll.transform.position) <= 3f && taskList[1] == false)
+        {
+            Hayroll.GetComponent<Rigidbody>().AddForce(this.transform.forward * 0.5f);
+        }
+
         if(didHayroll == true)
         {
             taskList[1] = true;
