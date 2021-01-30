@@ -3,7 +3,17 @@ guid: a5c901e1b12e4e84e8a4c757337ba9ba
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tire
+    second: {fileID: 2100000, guid: 4c3c10a0d950f2347bfd7bd8998c663e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tireRim
+    second: {fileID: 2100000, guid: 8ecffe3263fdc7348a938f4e9c7223b4, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
