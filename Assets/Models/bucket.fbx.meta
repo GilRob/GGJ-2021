@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: ff360c74410c7c24ea31547d436da94c
+guid: 8ee3116fc89aaa944bf7bc31af93026a
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: tire
-    second: {fileID: 2100000, guid: 4c3c10a0d950f2347bfd7bd8998c663e, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
