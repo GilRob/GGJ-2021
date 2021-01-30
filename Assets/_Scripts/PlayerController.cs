@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float walkingSpeed;
     public float runningSpeed;
+    public float crouchingSpeed;
     public float staminaReduceSpeed;
     public float staminaBackupWalking;
     public float staminaBackupStop;
@@ -18,7 +19,8 @@ public class PlayerController : MonoBehaviour
     float groundDis = 0.4f;
     public LayerMask groundMask;
     bool isGrounded;
-    public bool isRunning;
+    public bool isRunning = false;
+    public bool isCrouching = false;
 
     public Image fill;
     public Image bar;
@@ -55,7 +57,15 @@ public class PlayerController : MonoBehaviour
 
         Vector3 direct = transform.right * x + transform.forward * y;
 
-        if (Input.GetButton("Run") && (x > 0 || y > 0))
+        if (Input.GetButtonDown("Crouch"))
+        {
+            if (isCrouching)
+                isCrouching = false;
+            else
+                isCrouching = true;
+        }
+
+        if (Input.GetButton("Run") && (x > 0 || y > 0) && !isCrouching)
         {
             isRunning = true;
         }
@@ -90,13 +100,17 @@ public class PlayerController : MonoBehaviour
         {
             controller.Move(direct * runningSpeed * Time.deltaTime);
         }
+        else if(isCrouching)
+        {
+            controller.Move(direct * crouchingSpeed * Time.deltaTime);
+        }
         else
         {
             controller.Move(direct * walkingSpeed * Time.deltaTime);
         }
 
         // jump with keybboard & controller
-        if(Input.GetButtonDown("Jump") && isGrounded)
+        if(Input.GetButtonDown("Jump") && isGrounded && !isCrouching)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * fallingSpeed);
         }
@@ -104,6 +118,7 @@ public class PlayerController : MonoBehaviour
         velocity.y += fallingSpeed * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
+        // player interact object
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 100.0f))
         {
 

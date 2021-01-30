@@ -18,9 +18,13 @@ public class CameraController : MonoBehaviour
     public float shakingSpeed = 0.18f;
     public float shakingAmount = 0.2f;
 
+    public float crouchReducedHeight = 0.7f;
+    float originalHeight;
+
     void Start()
     {
         xRotate = 0f;
+        originalHeight = midp;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -41,11 +45,17 @@ public class CameraController : MonoBehaviour
         {
             shakingSpeed = runShakingSpeed;
             shakingAmount = runShakingAmount;
+            midp = originalHeight;
+        }
+        else if (player.GetComponent<PlayerController>().isCrouching)
+        {
+            midp = originalHeight - crouchReducedHeight;
         }
         else
         {
             shakingSpeed = walkShakingSpeed;
             shakingAmount = walkShakingAmount;
+            midp = originalHeight;
         }
 
         float waveslice = 0.0f;
