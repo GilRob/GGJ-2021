@@ -33,7 +33,12 @@ public class PlayerController : MonoBehaviour
     public Sprite InteractCursor;
     public Sprite InvestigateCursor;
     //////////////////////////////////
+    public Transform axePosition;
+    public Transform bucketPosition;
+    public Transform eggPosition;
+    [HideInInspector]
     public Transform holdPosition;
+
     [HideInInspector]
     public bool currentlyHolding = false;
     Rigidbody itemRB;
@@ -41,7 +46,9 @@ public class PlayerController : MonoBehaviour
     {
         controller = this.GetComponent<CharacterController>();
         currentItem = new GameObject();
+        currentItem.name = "Empty";
         itemRB = new Rigidbody();
+        holdPosition = new GameObject().transform;
     }
 
     void Update()
@@ -145,6 +152,22 @@ public class PlayerController : MonoBehaviour
 
         if(currentItem != null && currentlyHolding == true)
         {
+            if(currentItem.name == "Axe" )
+            {
+                holdPosition.position = axePosition.position;
+                holdPosition.rotation = axePosition.rotation;
+            }
+            else if(currentItem.name == "bucket")
+            {
+                holdPosition.position = bucketPosition.position;
+                holdPosition.rotation = bucketPosition.rotation;
+            }
+            else if(currentItem.name == "Egg(Clone)")
+            {
+                holdPosition.position = eggPosition.position;
+                holdPosition.rotation = eggPosition.rotation;
+            }
+
             currentItem.transform.position = holdPosition.position;
             currentItem.transform.rotation = holdPosition.rotation;
         }
@@ -155,7 +178,8 @@ public class PlayerController : MonoBehaviour
             currentItem.GetComponent<Rigidbody>().useGravity = true;
             currentItem.GetComponent<Rigidbody>().AddForce(new Vector3(currentItem.transform.forward.x * 200f, currentItem.transform.forward.y * 100f, currentItem.transform.forward.z * 200f));
             currentlyHolding = false;
-            Debug.Log("Drop");
+            currentItem = new GameObject();
+            currentItem.name = "Empty";
         }
     }
 }

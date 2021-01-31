@@ -7,9 +7,12 @@ public class Tasks : MonoBehaviour
     // Start is called before the first frame update
     PlayerController player;
     public GameObject Hayroll;
-
+    public GameObject Egg;
     static public bool didHayroll = false;
     bool[] taskList;
+    bool gotEggs = false;
+
+
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
@@ -24,6 +27,7 @@ public class Tasks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+////////////////////////////////////////////////////////////////////////////////////
         //Bring Axe to Farmer Task
         if(player.hitInfo.collider != null)
         {
@@ -36,10 +40,11 @@ public class Tasks : MonoBehaviour
                     Destroy(player.currentItem);
                     player.currentlyHolding = false;
                     player.currentItem = new GameObject();
+                    player.currentItem.name = "Empty";
                 }
             }
         }
-
+////////////////////////////////////////////////////////////////////////////////////
         //Roll Hayroll to Spot *collision code in chekCollision.cs*
         if(Vector3.Distance(this.transform.position, Hayroll.transform.position) <= 3f && taskList[1] == false)
         {
@@ -52,7 +57,7 @@ public class Tasks : MonoBehaviour
             Debug.Log("task complete");
             didHayroll = false;
         }
-
+//////////////////////////////////////////////////////////////////////////////////
         //Bring bucket to Chicken Coop
         if(player.hitInfo.collider != null)
         {
@@ -65,8 +70,39 @@ public class Tasks : MonoBehaviour
                     Destroy(player.currentItem);
                     player.currentlyHolding = false;
                     player.currentItem = new GameObject();
+                    player.currentItem.name = "Empty";
                 }
             }
         }
+/////////////////////////////////////////////////////////////////////////////////////////////
+        //Collect Chicken Eggs
+        if(player.hitInfo.collider != null)
+        {
+            if(player.hitInfo.collider.name == "ChickenCoop" && taskList[3] == false)
+            {
+                if(Input.GetButtonDown("Interact") && player.currentItem.name == "Empty")
+                {
+                    player.currentItem = Instantiate(Egg, player.holdPosition.position, player.holdPosition.rotation);
+                    player.currentlyHolding = true;
+                    gotEggs = true;
+                }
+            }
+
+             if(player.hitInfo.collider.name == "EggBasket" && taskList[3] == false)
+            {
+                if(Input.GetButtonDown("Interact") && player.currentItem.name == "Egg(Clone)" && gotEggs == true)
+                {
+                    taskList[3] = true;
+                    Destroy(player.currentItem);
+                    player.currentlyHolding = false;
+                    player.currentItem = new GameObject();
+                    player.currentItem.name = "Empty";
+                    Debug.Log("Got The Eggs");
+                }
+            }
+
+        }    
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     }
 }
