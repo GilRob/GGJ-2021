@@ -20,6 +20,7 @@ public class EnemyAI : MonoBehaviour
     bool patrolPointSet;
     float idelTimer;
     bool playerInSight;
+    Animator animator;
 
     enum EnemyState
     {
@@ -38,6 +39,9 @@ public class EnemyAI : MonoBehaviour
         idelTimer = idelTime;
         navMeshAgent.speed = potrollingSpeed;
         this.gameObject.GetComponent<SphereCollider>().radius = playerInSightDistance;
+        animator = this.gameObject.GetComponent<Animator>();
+        animator.SetBool("animWalk", true);
+        animator.SetBool("animRun", false);
     }
 
     void Update()
@@ -104,6 +108,8 @@ public class EnemyAI : MonoBehaviour
             idelTimer = idelTime;
             enemyState = EnemyState.Patrol;
             navMeshAgent.speed = potrollingSpeed;
+            animator.SetBool("animWalk", true);
+            animator.SetBool("animRun", false);
         }
     }
 
@@ -132,12 +138,16 @@ public class EnemyAI : MonoBehaviour
                 patrolPointSet = false;
                 enemyState = EnemyState.Chase;
                 navMeshAgent.speed = chasingSpeed;
+                animator.SetBool("animWalk", false);
+                animator.SetBool("animRun", true);
             }
             if (player.GetComponent<PlayerController>().isRunning)
             {
                 patrolPointSet = false;
                 enemyState = EnemyState.Chase;
                 navMeshAgent.speed = chasingSpeed;
+                animator.SetBool("animWalk", false);
+                animator.SetBool("animRun", true);
             }
             else if (player.GetComponent<PlayerController>().isCrouching && !player.GetComponent<PlayerController>().isStop)
             {
@@ -146,6 +156,8 @@ public class EnemyAI : MonoBehaviour
                     patrolPointSet = false;
                     enemyState = EnemyState.Chase;
                     navMeshAgent.speed = chasingSpeed;
+                    animator.SetBool("animWalk", false);
+                    animator.SetBool("animRun", true);
                 }
             }
             else if (player.GetComponent<PlayerController>().isStop)
@@ -159,6 +171,8 @@ public class EnemyAI : MonoBehaviour
                     patrolPointSet = false;
                     enemyState = EnemyState.Chase;
                     navMeshAgent.speed = chasingSpeed;
+                    animator.SetBool("animWalk", false);
+                    animator.SetBool("animRun", true);
                 }
             }
         }
