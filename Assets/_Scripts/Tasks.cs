@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Tasks : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -17,13 +17,13 @@ public class Tasks : MonoBehaviour
     //toilet variables
     float startTime = 0f;
     float holdTime = 3f;
-
+    public Text text;
     float timer = 0f;
     public Material cleanToilet;
     public Material cleanMatt;
     //public int[] dialogues;
     //public int element;
-///////////////////////////////////
+    ///////////////////////////////////
 
     void Start()
     {
@@ -33,7 +33,7 @@ public class Tasks : MonoBehaviour
 
         taskList = new bool[7];
 
-        for(int i =0; i < 7;i++)
+        for (int i = 0; i < 7; i++)
         {
             taskList[i] = false;
         }
@@ -46,11 +46,11 @@ public class Tasks : MonoBehaviour
         ////////////////////////////////////////////////////////////////////////////////////
         //Bring Axe to Farmer Task
         //Debug.Log(dialogues.activeTask);
-        if(player.hitInfo.collider != null)
+        if (player.hitInfo.collider != null)
         {
-            if(player.hitInfo.collider.tag == "Farmer")
+            if (player.hitInfo.collider.tag == "Farmer")
             {
-                if(Input.GetButtonDown("Interact") && player.currentItem.name == "Axe")
+                if (Input.GetButtonDown("Interact") && player.currentItem.name == "Axe")
                 {
                     Debug.Log("Respect Fam");
                     taskList[0] = true;
@@ -60,7 +60,7 @@ public class Tasks : MonoBehaviour
                     player.currentItem.name = "Empty";
                     farmer.check++;
                     //element = Random.Range(0, dialogues.Count);
-                    farmer.Dialogue.Show("My axe...Need you to do a few more things", "Farmer", Random.Range(5,7));
+                    farmer.Dialogue.Show("My axe...Need you to do a few more things", "Farmer", Random.Range(5, 7));
                     //dialogues.RemoveAt(element);
                     pMovement.enabled = false;
                     farmer.done = true;
@@ -255,6 +255,74 @@ public class Tasks : MonoBehaviour
                 }
             }
         }
-/////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        //Text Elements
+
+        if (player.hitInfo.collider != null)
+        {
+            //Pickup Items////////////////////////////////////////////////////////////////////////////////////
+            if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "Axe")
+            {
+                text.text = "Press E to Pickup Axe";
+            }
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "broom")
+            {
+                text.text = "Press E to Pickup Broom";
+            }
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "toiletBrush")
+            {
+                text.text = "Press E to Pickup Toilet Brush";
+            }
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "bucket")
+            {
+                text.text = "Press E to Pickup Bucket";
+            }
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "ChickenCoop" && taskList[3] == false)
+            {
+                text.text = "Press E to Pickup Egg";
+            }
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "pitchFork")
+            {
+                text.text = "Press E to Pickup Pitchfork";
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////
+            else if (player.currentItem.name == "Axe" && player.hitInfo.collider.tag == "Farmer")
+            {
+                text.text = "Press E to Give Axe";
+            }
+            else if (player.currentItem.name == "broom" && player.hitInfo.collider.name == "matt")
+            {
+                text.text = "Hold E to Sweep Mat";
+            }
+            else if (player.currentItem.name == "toiletBrush" && player.hitInfo.collider.name == "toilet")
+            {
+                text.text = "Hold E to Clean Toilet";
+            }
+            else if (player.currentItem.name == "bucket" && player.hitInfo.collider.name == "ChickenCoop")
+            {
+                text.text = "Press E to Feed Chickens";
+            }
+            else if (player.currentItem.name == "Egg(Clone)" && player.hitInfo.collider.name == "EggBasket")
+            {
+                text.text = "Press E to Place Eggs In Basket";
+            }
+            else if (player.currentItem.name == "pitchFork" && player.hitInfo.collider.name == "poop")
+            {
+                text.text = "Hold E to Clean Poop";
+            }
+            else if (Vector3.Distance(this.transform.position, Hayroll.transform.position) <= 3f && taskList[1] == false)
+            {
+                text.text = "Move Forward to Roll Hay Towards the Barn";
+            }
+            else
+            {
+                text.text = "";
+            }
+        }
     }
+
+
+    //////////////////////////////////////////////////////////////////////////////
 }
