@@ -57,6 +57,8 @@ public class DialogueWindow : MonoBehaviour
 
             nextText();
         }
+        else if (Input.GetKeyDown("e") && scrollDone == true && active == false)
+            Close();
     }
 
     public void Show(string text, string name, int scene, bool oneShot)
@@ -67,6 +69,7 @@ public class DialogueWindow : MonoBehaviour
         group.alpha = 1;
         CurrentText = text;
         speaker.text = name;
+        if (oneShot == false)
         active = true;
         StartCoroutine(DisplayText());
     }

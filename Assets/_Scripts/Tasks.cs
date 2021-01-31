@@ -294,7 +294,71 @@ public class Tasks : MonoBehaviour
 
 
         }
+        ////
 
+        if (player.hitInfo.collider.name == "FarmSign")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("'Hatbek Dream Farms, Fresh Local &  \u0022Fun\u0022!' A little ominous if anything", "Player", 4, true);
+            }
+        }
+        if (player.hitInfo.collider.name == "poop")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("Issa poop", "Player", 4, true);
+            }
+        }
+        if (player.hitInfo.collider.name == "Cow")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("Sup cow", "Player", 4, true);
+            }
+        }
+        if (player.hitInfo.collider.name == "rickyPainting")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("Hmph", "Player", 4, true);
+            }
+        }
+        if (player.hitInfo.collider.name == "ChickenWithAnim (4)")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("Sup chick", "Player", 4, true);
+            }
+        }
+        if (player.hitInfo.collider.name == "Boat")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("Wonder if this is working...", "Player", 4, true);
+            }
+        }
+        if (player.hitInfo.collider.name == "eashPainting")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("Getting a lot of negative vibes from this", "Player", 4, true);
+            }
+        }
+        if (player.hitInfo.collider.name == "fossilPainting")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("Kinda cute not gonna lie", "Player", 4, true);
+            }
+        }
+        if (player.hitInfo.collider.name == "RockingChair")
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                dialogues.Show("Of course this man is gonna have a rocking chair", "Player", 4, true);
+            }
+        }
         /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         //Text Elements
