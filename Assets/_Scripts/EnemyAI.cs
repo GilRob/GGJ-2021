@@ -22,6 +22,10 @@ public class EnemyAI : MonoBehaviour
     bool playerInSight;
     Animator animator;
 
+    //Gil Stuff for Sounds
+    public AudioSource chaseAudioSource;
+    public AudioSource stealthAudioSource;
+
     enum EnemyState
     {
         Idle,
@@ -62,12 +66,16 @@ public class EnemyAI : MonoBehaviour
 
     void EnemyIdle()
     {
+        stealthAudioSource.mute = false;
+        chaseAudioSource.mute = true;
+
         idelTimer -= Time.deltaTime;
 
         if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance)
         {
             if (playerInSight)
             {
+                //this.gameObject.GetComponent
                 idelTimer = idelTime;
                 enemyState = EnemyState.Chase;
                 navMeshAgent.speed = chasingSpeed;
@@ -115,6 +123,9 @@ public class EnemyAI : MonoBehaviour
 
     void EnemyPatrolling()
     {
+        stealthAudioSource.mute = false;
+        chaseAudioSource.mute = true;
+
         if (!patrolPointSet)
         {
             int random = Random.Range(0, 4);
@@ -203,7 +214,10 @@ public class EnemyAI : MonoBehaviour
 
     void EnemyChasing()
     {
-        if(playerInSight && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance)
+        chaseAudioSource.mute = false;
+        stealthAudioSource.mute = true;
+
+        if (playerInSight && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance)
         {
             navMeshAgent.SetDestination(player.transform.position);
         }
