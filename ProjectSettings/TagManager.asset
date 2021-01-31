@@ -7,6 +7,9 @@ TagManager:
   - Stone
   - Wood
   - Dirt
+  - Investigate
+  - Interactable
+  - Farmer
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - 
   - 
   - Ground
-  - 
+  - Player
   - 
   - 
   - 

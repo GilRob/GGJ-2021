@@ -78,7 +78,7 @@ Material:
     - _DstBlend: 0
     - _FalloffDepth: 0.5
     - _FalloffStrength: 0.25
-    - _FlowSpeed: 0.1
+    - _FlowSpeed: 0
     - _FoamAmount: 0.1
     - _FoamRampLerp: 0
     - _GlossMapScale: 1
@@ -101,7 +101,7 @@ Material:
     - _SrcBlend: 1
     - _TexDistortion: 0.25
     - _UVSec: 0
-    - _WaveAmp: 0.5
+    - _WaveAmp: 0.09
     - _WaveLerp: 1
     - _WaveSpeed: 0.5
     - _WorldSpaceNrm: 0

@@ -170,8 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c96df9fb35ac8a4a934e9e6da1666af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 5
+  walkingSpeed: 6
   runningSpeed: 20
+  crouchingSpeed: 3
   staminaReduceSpeed: 0.3
   staminaBackupWalking: 0.1
   staminaBackupStop: 0.3
@@ -182,6 +183,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isRunning: 0
+  isCrouching: 0
   fill: {fileID: 0}
   bar: {fileID: 0}
   cursor: {fileID: 0}
@@ -313,3 +315,4 @@ MonoBehaviour:
   midp: 2
   shakingSpeed: 0.18
   shakingAmount: 0.2
+  crouchReducedHeight: 1.2
