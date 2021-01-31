@@ -10,7 +10,12 @@ public class DialogueWindow : MonoBehaviour
     public Text speaker;
     public Image next;
     public string[] sceneOne;
-    public string[] sceneTwo;
+    public string[] sceneAxe;
+    public string[] sceneToilet;
+    public string[] scenePoop;
+    public string[] sceneEgg;
+    public string[] sceneHay;
+    public string[] sceneFinal;
 
     private string CurrentText;
     private bool scrollDone = false;
@@ -57,6 +62,8 @@ public class DialogueWindow : MonoBehaviour
         active = false;
         group.alpha = 0;
         count = 0;
+        ncount = 1;
+        Debug.Log("Closed");
     }
 
     public void skipText()
@@ -86,10 +93,11 @@ public class DialogueWindow : MonoBehaviour
     int ncount = 1;
     private void nextText()
     {
-       
+        //Debug.Log("Count" + count);
+
         string name = "";
-        Debug.Log("Count: " + count);
-        Debug.Log("NameCount: " + ncount);
+        //Debug.Log("Count: " + count);
+        //Debug.Log("NameCount: " + ncount);
 
         if (ncount == 0)
         {
@@ -101,22 +109,86 @@ public class DialogueWindow : MonoBehaviour
             name = "Player";
             ncount--;
         }
+
         count++;
         if (currentScene == 1)
         {
+            Debug.Log("Count: " + count);
+            Debug.Log("Length: " + sceneOne.Length);
+
             Show(sceneOne[count], name, currentScene);
             if (count == sceneOne.Length - 1)
             {
+                Debug.Log("Triggered1");
                 player.enabled = true;
                 active = false;
             }
         }
         if (currentScene == 3)
         {
-            Debug.Log(count);
-            Show(sceneTwo[count], name, currentScene);
-            if (count == sceneTwo.Length)
+            Debug.Log("TwoCount: " + count);
+
+            Debug.Log("TwoLength: " + sceneAxe.Length);
+            Show(sceneAxe[count], name, currentScene);
+            if (count == sceneAxe.Length - 1)
             {
+                Debug.Log("Triggered2");
+
+                player.enabled = true;
+                active = false;
+            }
+        }
+        if (currentScene == 5)
+        { 
+            Show(sceneToilet[count], name, currentScene);
+            if (count == sceneToilet.Length - 1)
+            {
+                Debug.Log("Triggered2");
+
+                player.enabled = true;
+                active = false;
+            }
+    }
+      if (currentScene == 6)
+        { 
+            Show(scenePoop[count], name, currentScene);
+            if (count == scenePoop.Length - 1)
+            {
+                Debug.Log("Triggered2");
+
+                player.enabled = true;
+                active = false;
+            }
+        }  
+        if (currentScene == 7)
+        { 
+            Show(sceneEgg[count], name, currentScene);
+            if (count == sceneEgg.Length - 1)
+            {
+                Debug.Log("Triggered2");
+
+                player.enabled = true;
+                active = false;
+            }
+        }
+      if (currentScene == 8)
+        { 
+            Show(sceneHay[count], name, currentScene);
+            if (count == sceneHay.Length - 1)
+            {
+                Debug.Log("Triggered2");
+
+                player.enabled = true;
+                active = false;
+            }
+        }
+        if (currentScene == 9)
+        {
+            Show(sceneFinal[count], name, currentScene);
+            if (count == sceneHay.Length - 1)
+            {
+                Debug.Log("Triggered2");
+
                 player.enabled = true;
                 active = false;
             }

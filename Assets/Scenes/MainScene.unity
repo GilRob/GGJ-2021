@@ -5124,6 +5124,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 447544363}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &147257242 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7029948723529949830, guid: 001df34ce5be5514883802e740179fb7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1123573102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &147257246
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147257242}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: 001df34ce5be5514883802e740179fb7, type: 3}
 --- !u!1001 &148189515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7116,6 +7136,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GasCan
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0d12901cedfb5df4db5a782b2f21c9da,
+        type: 3}
+      propertyPath: m_TagString
+      value: Investigate
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d12901cedfb5df4db5a782b2f21c9da, type: 3}
 --- !u!1001 &240832092
@@ -8469,6 +8494,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ChickenWithAnim (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 334e2e2c6ec88a94993c73ea660f0a10,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 334e2e2c6ec88a94993c73ea660f0a10, type: 3}
@@ -12297,6 +12327,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cabin
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c848c5e9632bea74f94becf5a5d4c766,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c848c5e9632bea74f94becf5a5d4c766, type: 3}
@@ -19552,7 +19587,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8abd0051bde55584baa6d965e9f02f63, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.093
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -27657,6 +27692,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04b1b35dd75913b46a6836b125910726, type: 3}
+--- !u!1 &947942438 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0d12901cedfb5df4db5a782b2f21c9da,
+    type: 3}
+  m_PrefabInstance: {fileID: 239484433}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &947942441
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947942438}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0038936166, y: 0.012657704, z: 0.012140149}
+  m_Center: {x: 6.39077e-11, y: -0.0010876349, z: 0.0060700746}
 --- !u!4 &948256335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 91ebc569220588449956bf17f4feb2af,
@@ -31175,12 +31229,12 @@ MonoBehaviour:
   - What?
   - Go find my axe somewhere round this here barn. Lost it round the water.
   - Uh...Sure.
-  sceneTwo:
-  - What? I already got your stupid axe.
-  - That's too dang bad ain't it.
-  - ...What do you need me to do?
-  - Go feed my chickens, they need lovin'.
-  - Gross.
+  sceneAxe: []
+  sceneToilet: []
+  scenePoop: []
+  sceneEgg: []
+  sceneHay: []
+  sceneFinal: []
   player: {fileID: 1606397689}
 --- !u!225 &1089098153
 CanvasGroup:
@@ -31981,6 +32035,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -7029948723529949830, guid: 001df34ce5be5514883802e740179fb7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Dirt
+      objectReference: {fileID: 0}
     - target: {fileID: -4292154010595695564, guid: 001df34ce5be5514883802e740179fb7,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -31991,6 +32050,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -674449036139524865, guid: 001df34ce5be5514883802e740179fb7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Dirt
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 001df34ce5be5514883802e740179fb7,
         type: 3}
       propertyPath: m_Name
@@ -32000,6 +32064,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 001df34ce5be5514883802e740179fb7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5447331667604542231, guid: 001df34ce5be5514883802e740179fb7,
         type: 3}
@@ -37000,7 +37069,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8ff488f3785700d469090e957043e244, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.089
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -44622,7 +44691,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -44727,6 +44796,36 @@ MonoBehaviour:
 --- !u!143 &1606397689 stripped
 CharacterController:
   m_CorrespondingSourceObject: {fileID: 4938502113020403185, guid: 23492cb38d2f7b84bb41faffb4260fee,
+    type: 3}
+  m_PrefabInstance: {fileID: 385850714}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1606397691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606397686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa678a9e099a78c4d8390bbe1ab0d9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stoneClips:
+  - {fileID: 8300000, guid: 7ae0b2aa42a3754448cbd71438ae2291, type: 3}
+  - {fileID: 8300000, guid: 20d47726aa3142e468cd9e890d301de9, type: 3}
+  woodClips:
+  - {fileID: 8300000, guid: e7a2cb37a2ff7164e9d9ff4bbda4c394, type: 3}
+  - {fileID: 8300000, guid: a6a3a64526c0be44dbd8a94b2c93b057, type: 3}
+  grassClips:
+  - {fileID: 8300000, guid: dd4841679991e014ca7d9c4d2bc2d15f, type: 3}
+  - {fileID: 8300000, guid: fb1a5a5972b85dd46a7f0e6cea0b05a4, type: 3}
+  audioSource: {fileID: 1606397687}
+  playerCollider: {fileID: 1606397693}
+  controller: {fileID: 1606397689}
+--- !u!136 &1606397693 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 4938502113020403189, guid: 23492cb38d2f7b84bb41faffb4260fee,
     type: 3}
   m_PrefabInstance: {fileID: 385850714}
   m_PrefabAsset: {fileID: 0}
@@ -54541,6 +54640,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dock
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8772b91a002f6a540839cc7b2c762a32,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8772b91a002f6a540839cc7b2c762a32, type: 3}
 --- !u!4 &1886911892 stripped
@@ -58863,7 +58967,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f2f057c639375994ab3d8c55b68f6c00, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 0.502
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -62803,6 +62907,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3429070b9b4cef44eaf1c819b4de68cf,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wood
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3429070b9b4cef44eaf1c819b4de68cf, type: 3}

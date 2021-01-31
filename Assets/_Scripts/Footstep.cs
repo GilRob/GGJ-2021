@@ -5,14 +5,11 @@ using UnityEngine;
 public class Footstep : MonoBehaviour
 {
 
-    [SerializeField]
-    private AudioClip[] stoneClips;
-    [SerializeField]
-    private AudioClip[] woodClips;
-    [SerializeField]
-    private AudioClip[] grassClips;
+    public AudioClip[] stoneClips;
+    public AudioClip[] woodClips;
+    public AudioClip[] grassClips;
 
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private float timer;
     RaycastHit hit;
     public Collider playerCollider;
@@ -37,35 +34,42 @@ public class Footstep : MonoBehaviour
         {
             timer = 0;
         }
-        Debug.Log(timer); 
+        //Debug.Log(timer); 
         //Debug.Log(Time.deltaTime);
     }
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        Debug.Log("Awake");
+
+        //audioSource = GetComponent<AudioSource>();
     }
 
     private void Step()
     {
+        //Debug.Log("Played");
         checkHit();
+        //Debug.Log("Hit " + hit);
+
         AudioClip clip = GetRandomClip();
+       // Debug.Log("Played this" + clip);
         audioSource.PlayOneShot(clip);
     }
 
     bool checkHit()
     {
+        //Debug.Log("Checked");
         return Physics.Raycast(transform.position, Vector3.down, out hit, playerCollider.bounds.extents.y + 0.5f);
     }
 
     private AudioClip GetRandomClip()
     {
-        Debug.Log(grassClips.Length);
-        //Debug.Log(hit.collider.tag);
+        //Debug.Log(grassClips.Length);
+        Debug.Log(hit.collider.tag);
         if (hit.collider != null && hit.collider.tag == "Stone")
             return stoneClips[UnityEngine.Random.Range(0, stoneClips.Length)];
-        if (hit.collider != null && hit.collider.tag == "Wood")
+        else if (hit.collider != null && hit.collider.tag == "Wood")
             return woodClips[UnityEngine.Random.Range(0, woodClips.Length)];
-        if (hit.collider != null && hit.collider.tag == "Dirt")
+        else if (hit.collider != null && hit.collider.tag == "Dirt")
             return grassClips[UnityEngine.Random.Range(0, grassClips.Length)];
         else
             return grassClips[UnityEngine.Random.Range(0, grassClips.Length)];

@@ -39,6 +39,10 @@ public class Farmer : MonoBehaviour
         //{
         //    Dialogue.Show("Need you to do a few more things", "Farmer", 3);
         //}
+        if (other.tag == "Player" && check == 4)
+        {
+            Dialogue.Show("My patience is runnin' thin.", "Farmer", 4);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -53,6 +57,11 @@ public class Farmer : MonoBehaviour
         if (other.tag == "Player" && check == 2)
         {
             Dialogue.Close();
+        }
+        if (other.tag == "Player" && check == 3)
+        {
+            Dialogue.Close();
+            check++;
         }
     }
 }

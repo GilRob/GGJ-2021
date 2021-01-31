@@ -6,6 +6,7 @@ public class Tasks : MonoBehaviour
 {
     // Start is called before the first frame update
     PlayerController player;
+    CharacterController pMovement;
     public GameObject Hayroll;
     public GameObject Egg;
     static public bool didHayroll = false;
@@ -26,6 +27,7 @@ public class Tasks : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<PlayerController>();
         farmer = GameObject.FindObjectOfType<Farmer>();
+        pMovement = GameObject.FindObjectOfType<CharacterController>();
 
         taskList = new bool[7];
 
@@ -53,8 +55,8 @@ public class Tasks : MonoBehaviour
                     player.currentItem = new GameObject();
                     player.currentItem.name = "Empty";
                     farmer.check++;
-                    farmer.Dialogue.Show("Need you to do a few more things", "Farmer", 3);
-                    player.enabled = false;
+                    farmer.Dialogue.Show("Need you to do a few more things", "Farmer", Random.Range(5,8));
+                    pMovement.enabled = false;
                     farmer.done = true;
 
                 }
