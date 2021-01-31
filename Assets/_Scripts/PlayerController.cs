@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     public bool isRunning = false;
     public bool isCrouching = false;
+    public bool isJumping = false;
     public bool isStop;
 
     public Image fill;
@@ -119,6 +120,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetButtonDown("Jump") && isGrounded && !isCrouching)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * fallingSpeed);
+            isJumping = true;
         }
 
         velocity.y += fallingSpeed * Time.deltaTime;

@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour
     public GameObject player;
     public List<Transform> potrolPoints;
     public float playerInSightDistance = 5f;
+    public float hearWalkingDistance;
+    public float hearCrouchWalkDistance;
     public float potrollingSpeed = 5f;
     public float chasingSpeed = 10f;
     public float idelTime = 2f;
@@ -75,7 +77,7 @@ public class EnemyAI : MonoBehaviour
             }
             else if (player.GetComponent<PlayerController>().isCrouching && !player.GetComponent<PlayerController>().isStop)
             {
-                if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.25f)
+                if (Vector3.Distance(player.transform.position, this.transform.position) < hearCrouchWalkDistance)
                 {
                     idelTimer = idelTime;
                     enemyState = EnemyState.Chase;
@@ -88,7 +90,7 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.5f)
+                if (Vector3.Distance(player.transform.position, this.transform.position) < hearWalkingDistance)
                 {
                     idelTimer = idelTime;
                     enemyState = EnemyState.Chase;
@@ -139,7 +141,7 @@ public class EnemyAI : MonoBehaviour
             }
             else if (player.GetComponent<PlayerController>().isCrouching && !player.GetComponent<PlayerController>().isStop)
             {
-                if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.25f)
+                if (Vector3.Distance(player.transform.position, this.transform.position) < hearCrouchWalkDistance)
                 {
                     patrolPointSet = false;
                     enemyState = EnemyState.Chase;
@@ -152,7 +154,7 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.5f)
+                if (Vector3.Distance(player.transform.position, this.transform.position) < hearWalkingDistance)
                 {
                     patrolPointSet = false;
                     enemyState = EnemyState.Chase;
@@ -195,11 +197,16 @@ public class EnemyAI : MonoBehaviour
         {
             navMeshAgent.SetDestination(player.transform.position);
         }
-        else if(!player.GetComponent<PlayerController>().isStop && !player.GetComponent<PlayerController>().isCrouching && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.5f)
+        else if (player.GetComponent<PlayerController>().isJumping && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance)
+        {
+            player.GetComponent<PlayerController>().isJumping = false;
+            navMeshAgent.SetDestination(player.transform.position);
+        }
+        else if(!player.GetComponent<PlayerController>().isStop && !player.GetComponent<PlayerController>().isCrouching && Vector3.Distance(player.transform.position, this.transform.position) < hearWalkingDistance)
         {
             navMeshAgent.SetDestination(player.transform.position);
         }
-        else if (!player.GetComponent<PlayerController>().isStop && player.GetComponent<PlayerController>().isCrouching && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.25f)
+        else if (!player.GetComponent<PlayerController>().isStop && player.GetComponent<PlayerController>().isCrouching && Vector3.Distance(player.transform.position, this.transform.position) < hearCrouchWalkDistance)
         {
             navMeshAgent.SetDestination(player.transform.position);
         }
