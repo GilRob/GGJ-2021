@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class Tasks : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -23,6 +25,8 @@ public class Tasks : MonoBehaviour
     public Material cleanMatt;
     public GameObject gasCanister;
     private bool gasFull = false;
+    public RawImage fade;
+    private bool fadein = false;
     //public int[] dialogues;
     //public int element;
     ///////////////////////////////////
@@ -39,11 +43,15 @@ public class Tasks : MonoBehaviour
         {
             taskList[i] = false;
         }
+
+        fade.canvasRenderer.SetAlpha(0.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
         //Debug.Log(player.currentItem);
         ////////////////////////////////////////////////////////////////////////////////////
         //Bring Axe to Farmer Task
@@ -260,7 +268,7 @@ public class Tasks : MonoBehaviour
         //////
         if (dialogues.activeTask == 7)
         {
-            
+
             if (player.hitInfo.collider.name == "Garb")
             {
                 if (Input.GetButtonDown("Interact"))
@@ -278,7 +286,7 @@ public class Tasks : MonoBehaviour
             //    player.hitInfo.collider.tag = "Interactable";
             //    Debug.Log("Siphon");
             //}
-            if(player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Car")
+            if (player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Car")
             {
                 if (Input.GetButtonDown("Interact"))
                 {
@@ -289,7 +297,8 @@ public class Tasks : MonoBehaviour
             }
             if (player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Boat" && gasFull == true)
             {
-                Debug.Log("End");
+                Debug.Log("END");
+                SceneManager.LoadScene("WinScene");
             }
 
 
@@ -427,6 +436,9 @@ public class Tasks : MonoBehaviour
         }
     }
 
-
+    void fadeIn()
+    {
+        fade.CrossFadeAlpha(1, 2, false);
+    }
     //////////////////////////////////////////////////////////////////////////////
 }
