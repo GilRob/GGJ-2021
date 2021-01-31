@@ -46,6 +46,13 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool currentlyHolding = false;
     Rigidbody itemRB;
+    private Vector3 mLastPosition;
+    public GameObject stamina;
+    private bool recovering;
+    private bool inWheat;
+    private AudioSource wheatSource;
+    public AudioClip wheat;
+
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
@@ -53,10 +60,16 @@ public class PlayerController : MonoBehaviour
         currentItem.name = "Empty";
         itemRB = new Rigidbody();
         holdPosition = new GameObject().transform;
+        wheatSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        float speed = (transform.position - this.mLastPosition).magnitude / Time.deltaTime;
+        this.mLastPosition = transform.position;
+
+        Debug.Log(speed);
+
         // check if player on ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDis, groundMask);
         if(isGrounded && velocity.y < 0)
@@ -87,27 +100,38 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
         }
 
-        // if (fill.fillAmount <= 0.01f)
-        // {
-        //     isRunning = false;
-        // }
-        // if (isRunning)
-        // {
-        //     fill.fillAmount -= staminaReduceSpeed * Time.deltaTime;
-        //     bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
-        // }
-        // else
-        // {
-        //     if (x > 0 || y > 0)
-        //     {
-        //         fill.fillAmount += staminaBackupWalking * Time.deltaTime;
-        //     }
-        //     else
-        //     {
-        //         fill.fillAmount += staminaBackupStop * Time.deltaTime;
-        //     }
-        //     bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
-        // }
+        //if (recovering == false)
+        //    stamina.active = false;
+        //else
+        //    stamina.active = true;
+
+        if (fill.fillAmount <= 0.01f)
+        {
+            isRunning = false;
+        }
+
+        if (fill.fillAmount >= 1)
+            recovering = false;
+        else if (fill.fillAmount < 1)
+            recovering = true;
+
+         if (isRunning)
+         {
+             fill.fillAmount -= staminaReduceSpeed * Time.deltaTime;
+             bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
+         }
+         else
+         {
+             if (x > 0 || y > 0)
+             {
+                 fill.fillAmount += staminaBackupWalking * Time.deltaTime;
+             }
+             else
+             {
+                 fill.fillAmount += staminaBackupStop * Time.deltaTime;
+             }
+             bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
+         }
 
         if (isRunning)
         {
@@ -202,6 +226,34 @@ public class PlayerController : MonoBehaviour
             currentlyHolding = false;
             currentItem = new GameObject();
             currentItem.name = "Empty";
+        }
+
+        if (inWheat == true)
+        {
+            wheatSource.clip = wheat;
+            wheatSource.loop = true;
+            wheatSource.Play();
+        }
+        else
+        {
+            wheatSource.Stop();
+        }
+        //wheat.volume = Mathf.Clamp(speed, 0, 10);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Wheat")
+        {
+            inWheat = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Wheat")
+        {
+            inWheat = false;
         }
     }
 }
