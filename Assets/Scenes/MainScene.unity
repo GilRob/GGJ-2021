@@ -14122,6 +14122,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 292816072}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &292899838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e0829fceeb49a4ebb299c4c68539c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 322672858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &292899841
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292899838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: d4e0829fceeb49a4ebb299c4c68539c2, type: 3}
 --- !u!1001 &294206607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14975,17 +14995,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 56.29
+      value: 56.17
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.44
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.5
+      value: 8.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
@@ -15030,7 +15050,12 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
       propertyPath: m_Name
-      value: garbagebag (3)
+      value: Garb
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Interactable
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
@@ -41441,6 +41466,7 @@ RectTransform:
   - {fileID: 710848663}
   - {fileID: 1778347913}
   - {fileID: 1584179597}
+  - {fileID: 1052577210}
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42942,8 +42968,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 239484433}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &947942441
-BoxCollider:
+--- !u!64 &947942439
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42952,9 +42978,26 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 0d12901cedfb5df4db5a782b2f21c9da, type: 3}
+--- !u!54 &947942440
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947942438}
   serializedVersion: 2
-  m_Size: {x: 0.0038936166, y: 0.012657704, z: 0.012140149}
-  m_Center: {x: 6.39077e-11, y: -0.0010876349, z: 0.0060700746}
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!4 &948256335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 91ebc569220588449956bf17f4feb2af,
@@ -46791,7 +46834,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4711208715938537054, guid: 531dda05c87bb5d4ebb54bc5ee97a11b, type: 3}
 --- !u!4 &1042440427 stripped
@@ -46800,6 +46843,22 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 306841314}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &1042440428
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042440423}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &1042611063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47381,6 +47440,84 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aacfacf941bd1944814b78282525916, type: 3}
+--- !u!1 &1052577209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1052577210}
+  - component: {fileID: 1052577212}
+  - component: {fileID: 1052577211}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1052577210
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052577209}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 899141809}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -28, y: 170}
+  m_SizeDelta: {x: 600, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1052577211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052577209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 89220362d9b578645ab4b5f064d9ef0c, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1052577212
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052577209}
+  m_CullTransparentMesh: 0
 --- !u!1001 &1054641092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48741,14 +48878,43 @@ MonoBehaviour:
   - I can pay you.
   - You have to scratch my back before I scratch yours.
   - What?
-  - Go find my axe somewhere round this here barn. Lost it round the water.
+  - Go find my axe somewhere round this here farm. Lost it round the water.
   - Uh...Sure.
-  sceneAxe: []
-  sceneToilet: []
-  scenePoop: []
-  sceneEgg: []
-  sceneHay: []
-  sceneFinal: []
+  sceneAxe: [My Axe..., 'Seriously? You gonna put me on payroll next?', Relax boy...just
+      a few more things, '...What do you need?', MODIFY, I guess...]
+  sceneToilet: [My Axe..., 'Please man, I just want to go home...', Then do what I
+      say., OK., 'See that outhouse by the right? Clean the toilet.', How bad can
+      it be...]
+  scenePoop: [My Axe..., 'Is the car done yet?', 'Soon boy, do this first.', 'Yeah,
+      whatever.', 'There be some poop in the barn house, go scoop that', Back to work...]
+  sceneEgg: [My Axe..., 'Are you actually a farmer? You seem pretty lazy.', 'Don''t
+      push me cityboy, work isn''t free.', 'Fine, what do you want?', Go put some
+      eggs in the basket by the cabin, 'Fine, I''ll be back']
+  sceneHay: [My axe..., 'You don''t have anyone else here to help you?', I usually
+      get some fools to do my dirty work., 'What does that mean?', How about you go
+      roll some stray hay into the barn for me., Guess I'll ignore that...]
+  sceneSweep:
+  - My axe...
+  - Don't really know what else I expected.
+  - Is there a problem kid?
+  - As long as you're fixing my car, no. What do you want?
+  - Sweep the front porch for me, broom should be around here somewhere.
+  - Seriously? You're right here...
+  sceneBucket:
+  - My axe...
+  - Maybe I'll just walk home.
+  - They say a monster roams these woods. Wouldn't be the best idea.
+  - Guess I have no choice.
+  - Go feed my chickens by the cabin, they need some lovin'
+  - Gross
+  sceneFinal: [One more thing..., 'I am DONE doing favours for you old man. Your back
+      has been thoroughly scratched, now it''s time for mine.', 'Old...man?', '(Seriously?
+      Dude looks like he''s pushing 70)', Heh...Hahaha..., 'So...the car?', 'The car
+      is ready, but if you would be so kind to help this "old man" before you leave,
+      I''d appreciate it', 'What else do you need?', 'There''s some garbage out the
+      back, just toss those away and we''ll be square...', 'I''ll see what I can do,
+      thanks.']
+  activeTask: 7
   player: {fileID: 1606397689}
 --- !u!225 &1089098153
 CanvasGroup:
@@ -70856,9 +71022,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hayroll: {fileID: 2036961745}
   Egg: {fileID: 5045178327163079145, guid: c876b1161b036a445aaf527760bdcf3a, type: 3}
+  dialogues: {fileID: 1089098152}
+  text: {fileID: 1052577211}
   cleanToilet: {fileID: 1594048070546970594, guid: 31f87693c5ffb304f969eaec547f9b87,
     type: 3}
   cleanMatt: {fileID: 2100000, guid: 9fe78e3bc36fe2b4982e3b6ec68ae86a, type: 2}
+  gasCanister: {fileID: 947942438}
 --- !u!143 &1606397689 stripped
 CharacterController:
   m_CorrespondingSourceObject: {fileID: 4938502113020403185, guid: 23492cb38d2f7b84bb41faffb4260fee,
