@@ -10,6 +10,7 @@ TagManager:
   - Investigate
   - Interactable
   - Farmer
+  - Wheat
   layers:
   - Default
   - TransparentFX
