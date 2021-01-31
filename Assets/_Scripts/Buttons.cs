@@ -16,4 +16,14 @@ public class Buttons : MonoBehaviour
         Application.Quit();
         Debug.Log("Game is closed");
     }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
+    public void backToMain()
+    {
+        SceneManager.LoadScene("MenuFINAL");
+    }
 }

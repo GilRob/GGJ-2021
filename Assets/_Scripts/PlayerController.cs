@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private bool inWheat;
     private AudioSource wheatSource;
     public AudioClip wheat;
+    private int layerMask = ~(1 << 9);
 
     void Start()
     {
@@ -166,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
     void Interact()
     {
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 100.0f))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 100.0f, layerMask))
         {
 
             if(hitInfo.collider.tag == "Interactable")
