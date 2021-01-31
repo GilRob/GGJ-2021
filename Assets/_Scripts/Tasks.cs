@@ -19,6 +19,7 @@ public class Tasks : MonoBehaviour
 
     float timer = 0f;
     public Material cleanToilet;
+    public Material cleanMatt;
 ///////////////////////////////////
 
     void Start()
@@ -26,9 +27,9 @@ public class Tasks : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerController>();
         farmer = GameObject.FindObjectOfType<Farmer>();
 
-        taskList = new bool[6];
+        taskList = new bool[7];
 
-        for(int i =0; i < 6;i++)
+        for(int i =0; i < 7;i++)
         {
             taskList[i] = false;
         }
@@ -191,7 +192,7 @@ public class Tasks : MonoBehaviour
     //sweep the porch
     if(player.hitInfo.collider != null)
         {
-            if(player.hitInfo.collider.name == "porch" && taskList[6] == false)
+            if(player.hitInfo.collider.name == "matt" && taskList[6] == false)
             {
                 if(Input.GetButtonDown("Interact") && player.currentItem.name == "broom")
                 {
@@ -207,12 +208,12 @@ public class Tasks : MonoBehaviour
                     {
                         taskList[6] = true;
                         timer = 0;
-                        Destroy(player.hitInfo.collider.gameObject);
+                        player.hitInfo.collider.GetComponent<Renderer>().material = cleanMatt;
                         Destroy(player.currentItem);
                         player.currentlyHolding = false;
                         player.currentItem = new GameObject();
                         player.currentItem.name = "Empty";
-                        Debug.Log("porch Cleaned");
+                        Debug.Log("matt Cleaned");
                         
                     }
                 }
