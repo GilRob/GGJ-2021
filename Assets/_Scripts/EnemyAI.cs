@@ -5,17 +5,19 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform player;
+    public GameObject player;
     public List<Transform> potrolPoints;
     public float playerInSightDistance = 5f;
     public float potrollingSpeed = 5f;
     public float chasingSpeed = 10f;
     public float idelTime = 2f;
+    public float viewAngle;
     
     NavMeshAgent navMeshAgent;
     Vector3 patrolPoint;
     bool patrolPointSet;
     float idelTimer;
+    bool playerInSight;
 
     enum EnemyState
     {
@@ -33,9 +35,9 @@ public class EnemyAI : MonoBehaviour
         patrolPointSet = false;
         idelTimer = idelTime;
         navMeshAgent.speed = potrollingSpeed;
+        this.gameObject.GetComponent<SphereCollider>().radius = playerInSightDistance;
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch (enemyState)
@@ -56,11 +58,43 @@ public class EnemyAI : MonoBehaviour
     {
         idelTimer -= Time.deltaTime;
 
-        if (Vector3.Distance(player.position, this.transform.position) < playerInSightDistance)
+        if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance)
         {
-            idelTimer = idelTime;
-            enemyState = EnemyState.Chase;
-            navMeshAgent.speed = chasingSpeed;
+            if (playerInSight)
+            {
+                idelTimer = idelTime;
+                enemyState = EnemyState.Chase;
+                navMeshAgent.speed = chasingSpeed;
+                playerInSight = false;//??????????
+            }
+            if (player.GetComponent<PlayerController>().isRunning)
+            {
+                idelTimer = idelTime;
+                enemyState = EnemyState.Chase;
+                navMeshAgent.speed = chasingSpeed;
+            }
+            else if (player.GetComponent<PlayerController>().isCrouching && !player.GetComponent<PlayerController>().isStop)
+            {
+                if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.25f)
+                {
+                    idelTimer = idelTime;
+                    enemyState = EnemyState.Chase;
+                    navMeshAgent.speed = chasingSpeed;
+                }
+            }
+            else if (player.GetComponent<PlayerController>().isStop)
+            {
+                // when enemy is not look at player and player is not moving, player won't be detect
+            }
+            else
+            {
+                if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.5f)
+                {
+                    idelTimer = idelTime;
+                    enemyState = EnemyState.Chase;
+                    navMeshAgent.speed = chasingSpeed;
+                }
+            }
         }
 
         if (idelTimer <= 0)
@@ -89,42 +123,92 @@ public class EnemyAI : MonoBehaviour
         if (distance.magnitude < 1f)
             patrolPointSet = false;
 
-        if(Vector3.Distance(player.position, this.transform.position) < playerInSightDistance)
+        if(Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance)
         {
-            patrolPointSet = false;
-            enemyState = EnemyState.Chase;
-            navMeshAgent.speed = chasingSpeed;
+            if (playerInSight)
+            {
+                patrolPointSet = false;
+                enemyState = EnemyState.Chase;
+                navMeshAgent.speed = chasingSpeed;
+            }
             if (player.GetComponent<PlayerController>().isRunning)
             {
-
+                patrolPointSet = false;
+                enemyState = EnemyState.Chase;
+                navMeshAgent.speed = chasingSpeed;
             }
-            else if (player.GetComponent<PlayerController>().isCrouching)
+            else if (player.GetComponent<PlayerController>().isCrouching && !player.GetComponent<PlayerController>().isStop)
             {
-
+                if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.25f)
+                {
+                    patrolPointSet = false;
+                    enemyState = EnemyState.Chase;
+                    navMeshAgent.speed = chasingSpeed;
+                }
             }
             else if (player.GetComponent<PlayerController>().isStop)
             {
-
+                // when enemy is not look at player and player is not moving, player won't be detect
             }
             else
             {
+                if (Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.5f)
+                {
+                    patrolPointSet = false;
+                    enemyState = EnemyState.Chase;
+                    navMeshAgent.speed = chasingSpeed;
+                }
+            }
+        }
+    }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.gameObject == player)
+        {
+            playerInSight = false;
+
+            Vector3 direct = other.transform.position - transform.position;
+            float angle = Vector3.Angle(direct, transform.forward);
+            if(angle < viewAngle * 0.5f)
+            {
+                RaycastHit hit;
+
+                if(Physics.Raycast(transform.position + transform.up, direct.normalized, out hit, playerInSightDistance))
+                {
+                    if(hit.collider.gameObject == player)
+                    {
+                        playerInSight = true;
+                    }
+                }
             }
         }
     }
 
     void EnemyChasing()
     {
-        if (Vector3.Distance(player.position, this.transform.position) > playerInSightDistance)
+        if(playerInSight && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance)
         {
-            if(Vector3.Distance(this.transform.position, navMeshAgent.destination) < 3f)
-            {
-                enemyState = EnemyState.Idle;
-            }
+            navMeshAgent.SetDestination(player.transform.position);
+        }
+        else if(player.GetComponent<PlayerController>().isRunning && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance)
+        {
+            navMeshAgent.SetDestination(player.transform.position);
+        }
+        else if(!player.GetComponent<PlayerController>().isStop && !player.GetComponent<PlayerController>().isCrouching && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.5f)
+        {
+            navMeshAgent.SetDestination(player.transform.position);
+        }
+        else if (!player.GetComponent<PlayerController>().isStop && player.GetComponent<PlayerController>().isCrouching && Vector3.Distance(player.transform.position, this.transform.position) < playerInSightDistance * 0.25f)
+        {
+            navMeshAgent.SetDestination(player.transform.position);
         }
         else
         {
-            navMeshAgent.SetDestination(player.transform.position);
+            if (Vector3.Distance(this.transform.position, navMeshAgent.destination) < 3f)
+            {
+                enemyState = EnemyState.Idle;
+            }
         }
     }
 }
