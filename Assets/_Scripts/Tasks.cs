@@ -12,21 +12,24 @@ public class Tasks : MonoBehaviour
     bool[] taskList;
 
     bool gotEggs = false;
-
+    Farmer farmer;
 //toilet variables
     float startTime = 0f;
     float holdTime = 3f;
 
     float timer = 0f;
     public Material cleanToilet;
+    public Material cleanMatt;
 ///////////////////////////////////
 
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
-        taskList = new bool[6];
+        farmer = GameObject.FindObjectOfType<Farmer>();
 
-        for(int i =0; i < 6;i++)
+        taskList = new bool[7];
+
+        for(int i =0; i < 7;i++)
         {
             taskList[i] = false;
         }
@@ -49,6 +52,11 @@ public class Tasks : MonoBehaviour
                     player.currentlyHolding = false;
                     player.currentItem = new GameObject();
                     player.currentItem.name = "Empty";
+                    farmer.check++;
+                    farmer.Dialogue.Show("Need you to do a few more things", "Farmer", 3);
+                    player.enabled = false;
+                    farmer.done = true;
+
                 }
             }
         }
@@ -184,7 +192,7 @@ public class Tasks : MonoBehaviour
     //sweep the porch
     if(player.hitInfo.collider != null)
         {
-            if(player.hitInfo.collider.name == "porch" && taskList[6] == false)
+            if(player.hitInfo.collider.name == "matt" && taskList[6] == false)
             {
                 if(Input.GetButtonDown("Interact") && player.currentItem.name == "broom")
                 {
@@ -200,12 +208,12 @@ public class Tasks : MonoBehaviour
                     {
                         taskList[6] = true;
                         timer = 0;
-                        Destroy(player.hitInfo.collider.gameObject);
+                        player.hitInfo.collider.GetComponent<Renderer>().material = cleanMatt;
                         Destroy(player.currentItem);
                         player.currentlyHolding = false;
                         player.currentItem = new GameObject();
                         player.currentItem.name = "Empty";
-                        Debug.Log("porch Cleaned");
+                        Debug.Log("matt Cleaned");
                         
                     }
                 }

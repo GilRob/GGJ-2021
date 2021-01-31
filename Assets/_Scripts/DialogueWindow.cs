@@ -10,6 +10,8 @@ public class DialogueWindow : MonoBehaviour
     public Text speaker;
     public Image next;
     public string[] sceneOne;
+    public string[] sceneTwo;
+
     private string CurrentText;
     private bool scrollDone = false;
     private bool active;
@@ -54,6 +56,7 @@ public class DialogueWindow : MonoBehaviour
         StopAllCoroutines();
         active = false;
         group.alpha = 0;
+        count = 0;
     }
 
     public void skipText()
@@ -100,12 +103,23 @@ public class DialogueWindow : MonoBehaviour
         }
         count++;
         if (currentScene == 1)
-            Show(sceneOne[count], name, currentScene);
-
-        if(count == sceneOne.Length - 1)
         {
-            player.enabled = true;
-            active = false;
+            Show(sceneOne[count], name, currentScene);
+            if (count == sceneOne.Length - 1)
+            {
+                player.enabled = true;
+                active = false;
+            }
+        }
+        if (currentScene == 3)
+        {
+            Debug.Log(count);
+            Show(sceneTwo[count], name, currentScene);
+            if (count == sceneTwo.Length)
+            {
+                player.enabled = true;
+                active = false;
+            }
         }
     }
 }

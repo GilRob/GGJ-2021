@@ -100,10 +100,10 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
         }
 
-        //if (recovering == false)
-        //    stamina.active = false;
-        //else
-        //    stamina.active = true;
+        if (recovering == false)
+            stamina.active = false;
+        else
+            stamina.active = true;
 
         if (fill.fillAmount <= 0.01f)
         {
