@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour
                 holdPosition.position = bucketPosition.position;
                 holdPosition.rotation = bucketPosition.rotation;
             }
-            else if(currentItem.name == "Egg(Clone)" ||  currentItem.name == "toiletBrush")
+            else if(currentItem.name == "Egg(Clone)" ||  currentItem.name == "toiletBrush"|| currentItem.name == "pitchFork")
             {
                 holdPosition.position = eggPosition.position;
                 holdPosition.rotation = eggPosition.rotation;

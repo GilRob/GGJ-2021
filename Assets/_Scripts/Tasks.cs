@@ -10,13 +10,17 @@ public class Tasks : MonoBehaviour
     public GameObject Egg;
     static public bool didHayroll = false;
     bool[] taskList;
+
     bool gotEggs = false;
 
-    float toiletStartTime = 0f;
-    float toiletHoldTime = 3f;
+//toilet variables
+    float startTime = 0f;
+    float holdTime = 3f;
 
     float timer = 0f;
-    bool held = false;
+    public Material cleanToilet;
+///////////////////////////////////
+
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
@@ -114,17 +118,19 @@ public class Tasks : MonoBehaviour
             {
                  if(Input.GetButtonDown("Interact") && player.currentItem.name == "toiletBrush")
                 {
-                    toiletStartTime = Time.deltaTime;
+                    startTime = Time.deltaTime;
                 }
 
-                if(Input.GetButton("Interact") && player.currentItem.name == "toiletBrush" && held == false)
+                if(Input.GetButton("Interact") && player.currentItem.name == "toiletBrush")
                 {
                     timer += Time.deltaTime;
 
                    // Debug.Log(Time.deltaTime);
-                    if (timer >= (toiletStartTime + toiletHoldTime))
+                    if (timer >= (startTime + holdTime))
                     {
                         taskList[4] = true;
+                        timer = 0;
+                        player.hitInfo.collider.GetComponent<Renderer>().material = cleanToilet;
                         Destroy(player.currentItem);
                         player.currentlyHolding = false;
                         player.currentItem = new GameObject();
@@ -135,17 +141,47 @@ public class Tasks : MonoBehaviour
                 }
                 else
                 {
-                    toiletStartTime = Time.deltaTime;
+                    timer = 0;
                 }
             }
         }
-
-
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+    //clean poop in barn
+    if(player.hitInfo.collider != null)
+        {
+            if(player.hitInfo.collider.name == "poop" && taskList[5] == false)
+            {
+                if(Input.GetButtonDown("Interact") && player.currentItem.name == "pitchFork")
+                {
+                    startTime = Time.deltaTime;
+                }
+
+                if(Input.GetButton("Interact") && player.currentItem.name == "pitchFork")
+                {
+                    timer += Time.deltaTime;
+
+                   // Debug.Log(Time.deltaTime);
+                    if (timer >= (startTime + holdTime))
+                    {
+                        taskList[5] = true;
+                        timer = 0;
+                        Destroy(player.hitInfo.collider.gameObject);
+                        Destroy(player.currentItem);
+                        player.currentlyHolding = false;
+                        player.currentItem = new GameObject();
+                        player.currentItem.name = "Empty";
+                        Debug.Log("Poop Cleaned");
+                        
+                    }
+                }
+                else
+                {
+                    timer = 0;
+                }
+            }
+        }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     }
 }
