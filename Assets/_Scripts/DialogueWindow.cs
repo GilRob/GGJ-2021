@@ -15,12 +15,18 @@ public class DialogueWindow : MonoBehaviour
     public string[] scenePoop;
     public string[] sceneEgg;
     public string[] sceneHay;
-    public string[] sceneFinal;
+    public string[] sceneSweep;
+    public string[] sceneBucket;
 
+    public string[] sceneFinal;
+    Farmer farmer;
+    public int activeTask;
     private string CurrentText;
     private bool scrollDone = false;
     private bool active;
     private int currentScene;
+    int count = 0;
+    int ncount = 1;
     CanvasGroup group;
 
     public CharacterController player;
@@ -31,24 +37,33 @@ public class DialogueWindow : MonoBehaviour
         group = GetComponent<CanvasGroup>();
         group.alpha = 0;
         next.enabled = false;
+        farmer = GameObject.FindObjectOfType<Farmer>();
+
     }
 
     private void Update()
     {
+        //Debug.Log("activated");
         if (Input.GetKeyDown("e") && scrollDone == false)
         {
+            Debug.Log("Skipped");
+
             skipText();
             scrollDone = true;
         }
         else if (Input.GetKeyDown("e") && scrollDone == true && active == true)
         {
+            Debug.Log("Next texted");
+
             nextText();
         }
     }
 
     public void Show(string text, string name, int scene)
     {
+
         currentScene = scene;
+        Debug.Log("CurrentS: " + scene);
         group.alpha = 1;
         CurrentText = text;
         speaker.text = name;
@@ -89,11 +104,14 @@ public class DialogueWindow : MonoBehaviour
 
     }
 
-    int count = 0;
-    int ncount = 1;
+
     private void nextText()
     {
-        //Debug.Log("Count" + count);
+        Debug.Log("Count: " + count);
+        Debug.Log("Active: " + active);
+        Debug.Log("ActiveTask: " + activeTask);
+        Debug.Log("Current Scene: " + currentScene);
+        Debug.Log("ScrollDone: " + scrollDone);
 
         string name = "";
         //Debug.Log("Count: " + count);
@@ -110,9 +128,10 @@ public class DialogueWindow : MonoBehaviour
             ncount--;
         }
 
-        count++;
         if (currentScene == 1)
         {
+            count++;
+
             Debug.Log("Count: " + count);
             Debug.Log("Length: " + sceneOne.Length);
 
@@ -124,74 +143,129 @@ public class DialogueWindow : MonoBehaviour
                 active = false;
             }
         }
-        if (currentScene == 3)
+        //if (currentScene == 3)
+        //{
+        //    Debug.Log("TwoCount: " + count);
+
+        //    Debug.Log("TwoLength: " + sceneAxe.Length);
+        //    Show(sceneAxe[count], name, currentScene);
+        //    if (count == sceneAxe.Length - 1)
+        //    {
+        //        Debug.Log("Triggered2");
+
+        //        player.enabled = true;
+        //        active = false;
+        //    }
+        //}
+        else if (currentScene == 5)
         {
-            Debug.Log("TwoCount: " + count);
+            count++;
+            Debug.Log("Count: " + count);
 
-            Debug.Log("TwoLength: " + sceneAxe.Length);
-            Show(sceneAxe[count], name, currentScene);
-            if (count == sceneAxe.Length - 1)
-            {
-                Debug.Log("Triggered2");
-
-                player.enabled = true;
-                active = false;
-            }
-        }
-        if (currentScene == 5)
-        { 
             Show(sceneToilet[count], name, currentScene);
             if (count == sceneToilet.Length - 1)
             {
-                Debug.Log("Triggered2");
-
+                Debug.Log("Triggered Toilet");
+                //farmer.check++;
+                activeTask = 1;
                 player.enabled = true;
                 active = false;
+
             }
-    }
-      if (currentScene == 6)
-        { 
-            Show(scenePoop[count], name, currentScene);
-            if (count == scenePoop.Length - 1)
+        }
+        else if (currentScene == 6)
+        {
+            count++;
+            Debug.Log("Count: " + count);
+
+            Show(sceneSweep[count], name, currentScene);
+            if (count == sceneSweep.Length - 1)
             {
-                Debug.Log("Triggered2");
+                Debug.Log("Triggered Sweep");
+                activeTask = 2;
+                //farmer.check++;
+                Debug.Log("ActiveTask: " + activeTask);
 
                 player.enabled = true;
                 active = false;
             }
-        }  
-        if (currentScene == 7)
-        { 
+        }
+
+        else if (currentScene == 7)
+        {
+            count++;
+            Debug.Log("Count: " + count);
+
+            Show(sceneBucket[count], name, currentScene);
+            if (count == sceneBucket.Length - 1)
+            {
+
+                Debug.Log("Triggered Bucket");
+                activeTask = 3;
+
+                player.enabled = true;
+                active = false;
+            }
+        }
+        else if (currentScene == 8)
+        {
+            count++;
+            Debug.Log("Count: " + count);
+
             Show(sceneEgg[count], name, currentScene);
             if (count == sceneEgg.Length - 1)
             {
-                Debug.Log("Triggered2");
+                Debug.Log("Triggered Egg");
+                activeTask = 4;
 
                 player.enabled = true;
                 active = false;
             }
         }
-      if (currentScene == 8)
-        { 
+        else if (currentScene == 9)
+        {
+            count++;
+            Debug.Log("Triggered Hay");
+
             Show(sceneHay[count], name, currentScene);
             if (count == sceneHay.Length - 1)
             {
-                Debug.Log("Triggered2");
+                activeTask = 5;
 
                 player.enabled = true;
                 active = false;
             }
         }
-        if (currentScene == 9)
+        else if (currentScene == 10)
         {
-            Show(sceneFinal[count], name, currentScene);
-            if (count == sceneHay.Length - 1)
+            Debug.Log("Triggered Poop");
+
+            count++;
+
+            Show(scenePoop[count], name, currentScene);
+            if (count == scenePoop.Length - 1)
             {
-                Debug.Log("Triggered2");
+                activeTask = 6;
 
                 player.enabled = true;
                 active = false;
             }
         }
+
+
+        else if (currentScene == 11)
+        {
+            count++;
+            Debug.Log("Triggered Final");
+            Debug.Log("scenfinal" + sceneFinal.Length);
+            Show(sceneFinal[count], name, currentScene);
+            if (count == sceneFinal.Length - 1)
+            {
+                activeTask = 0;
+                player.enabled = true;
+                active = false;
+            }
+        }
+        
     }
 }

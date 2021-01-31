@@ -31229,12 +31229,69 @@ MonoBehaviour:
   - What?
   - Go find my axe somewhere round this here barn. Lost it round the water.
   - Uh...Sure.
-  sceneAxe: []
-  sceneToilet: []
-  scenePoop: []
-  sceneEgg: []
-  sceneHay: []
-  sceneFinal: []
+  sceneAxe:
+  - My Axe...
+  - Seriously? You gonna put me on payroll next?
+  - Relax boy...just a few more things
+  - ...What do you need?
+  - MODIFY
+  - I guess...
+  sceneToilet:
+  - My Axe...
+  - Please man, I just want to go home...
+  - Then do what I say.
+  - OK.
+  - See that outhouse by the right? Clean the toilet.
+  - How bad can it be...
+  scenePoop:
+  - My Axe...
+  - Is the car done yet?
+  - Soon boy, do this first.
+  - Yeah, whatever.
+  - There be some poop in the barn house, go scoop that
+  - Back to work...
+  sceneEgg:
+  - My Axe...
+  - Are you actually a farmer? You seem pretty lazy.
+  - Don't push me cityboy, work isn't free.
+  - Fine, what do you want?
+  - Go put some eggs in the basket by the cabin
+  - Fine, I'll be back
+  sceneHay:
+  - My axe...
+  - You don't have anyone else here to help you?
+  - I usually get some fools to do my dirty work.
+  - What does that mean?
+  - How about you go roll some stray hay into the barn for me.
+  - Guess I'll ignore that...
+  sceneSweep:
+  - My axe...
+  - Don't really know what else I expected.
+  - Is there a problem kid?
+  - As long as you're fixing my car, no. What do you want?
+  - Sweep the front porch for me, broom should be around here somewhere.
+  - Seriously? You're right here...
+  sceneBucket:
+  - My axe...
+  - Maybe I'll just walk home.
+  - They say a monster roams these woods. Wouldn't be the best idea.
+  - Guess I have no choice.
+  - Go feed my chickens by the cabin, they need some lovin'
+  - Gross
+  sceneFinal:
+  - One more thing...
+  - I am DONE doing favours for you old man. Your back has been thoroughly scratched,
+    now it's time for mine.
+  - Old...man?
+  - (Seriously? Dude looks like he's pushing 70)
+  - Heh...Hahaha...
+  - So...the car?
+  - The car is ready, but if you would be so kind to help this "old man" before you
+    leave, I'd appreciate it
+  - What else do you need?
+  - There's some garbage out the back, just toss those away and we'll be square...
+  - I'll see what I can do, thanks.
+  activeTask: 0
   player: {fileID: 1606397689}
 --- !u!225 &1089098153
 CanvasGroup:
@@ -44790,6 +44847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hayroll: {fileID: 2036961745}
   Egg: {fileID: 5045178327163079145, guid: c876b1161b036a445aaf527760bdcf3a, type: 3}
+  dialogues: {fileID: 1089098152}
   cleanToilet: {fileID: 1594048070546970594, guid: 31f87693c5ffb304f969eaec547f9b87,
     type: 3}
   cleanMatt: {fileID: 2100000, guid: 2af15f05587eb5140bbc5d5d76cf6ab2, type: 2}

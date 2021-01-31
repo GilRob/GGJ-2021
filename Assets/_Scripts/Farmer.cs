@@ -20,7 +20,9 @@ public class Farmer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       Debug.Log("Check: " + check);
+        Debug.Log("Done: " + done);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,13 +37,39 @@ public class Farmer : MonoBehaviour
         {
             Dialogue.Show("I ain't got all day boy", "Farmer", 2);
         }
-        //if (other.tag == "Player" && check == 3)
-        //{
-        //    Dialogue.Show("Need you to do a few more things", "Farmer", 3);
-        //}
-        if (other.tag == "Player" && check == 4)
+        if (other.tag == "Player" && check == 3)
         {
             Dialogue.Show("My patience is runnin' thin.", "Farmer", 4);
+        }
+        if (other.tag == "Player" && check == 4 && done == false)
+        {
+            Dialogue.Show("Nice, one more thing", "Farmer", Random.Range(7, 9));
+            player.enabled = false;
+            done = true;
+        }
+        if (other.tag == "Player" && check == 5)
+        {
+            Dialogue.Show("...", "Farmer", 4);
+        }
+        if (other.tag == "Player" && check == 6 && done == false)
+        {
+            Dialogue.Show("Nice, one more thing", "Farmer", Random.Range(9, 11));
+            player.enabled = false;
+            done = true;
+        }
+        if (other.tag == "Player" && check == 7)
+        {
+            Dialogue.Show("...", "Farmer", 4);
+        }
+        if (other.tag == "Player" && check == 8 && done == false)
+        {
+            Dialogue.Show("All done? I need one more thing...", "Farmer", 11);
+            player.enabled = false;
+            done = true;
+        }
+        if (other.tag == "Player" && check == 9)
+        {
+            Dialogue.Show("It's ok if you decide to leave...", "Farmer", 4);
         }
     }
 
@@ -54,14 +82,57 @@ public class Farmer : MonoBehaviour
             done = false;
 
         }
-        if (other.tag == "Player" && check == 2)
+        else if (other.tag == "Player" && check == 2)
         {
             Dialogue.Close();
         }
-        if (other.tag == "Player" && check == 3)
+        else if (other.tag == "Player" && check == 3)
+        {
+            Dialogue.Close();
+            done = false;
+
+        }
+        else if (other.tag == "Player" && check == 4)
         {
             Dialogue.Close();
             check++;
+            done = false;
+        }
+        else if (other.tag == "Player" && check == 5)
+        {
+            Dialogue.Close();
+            done = false;
+
+        }
+        else if (other.tag == "Player" && check == 6)
+        {
+            Dialogue.Close();
+            check++;
+            done = false;
+        }
+        else if (other.tag == "Player" && check == 7)
+        {
+            Dialogue.Close();
+            done = false;
+
+        }
+        else if (other.tag == "Player" && check == 8)
+        {
+            Dialogue.Close();
+            check++;
+            done = false;
+        }
+        else if (other.tag == "Player" && check == 9)
+        {
+            Dialogue.Close();
+            done = false;
+
+        }
+        else if (other.tag == "Player" && check == 10)
+        {
+            Dialogue.Close();
+            done = false;
+
         }
     }
 }
