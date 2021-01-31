@@ -29,47 +29,47 @@ public class Farmer : MonoBehaviour
     {
         if (other.tag == "Player" && check == 1 && done == false)
         {
-            Dialogue.Show(sceneOne[0], "Farmer", 1);
+            Dialogue.Show(sceneOne[0], "Farmer", 1, false);
             player.enabled = false;
             done = true;
         }
         if (other.tag == "Player" && check == 2)
         {
-            Dialogue.Show("I ain't got all day boy", "Farmer", 2);
+            Dialogue.Show("I ain't got all day boy", "Farmer", 2, true);
         }
         if (other.tag == "Player" && check == 3)
         {
-            Dialogue.Show("My patience is runnin' thin.", "Farmer", 4);
+            Dialogue.Show("My patience is runnin' thin.", "Farmer", 4, true);
         }
         if (other.tag == "Player" && check == 4 && done == false)
         {
-            Dialogue.Show("Nice, one more thing", "Farmer", Random.Range(7, 9));
+            Dialogue.Show("Nice, one more thing", "Farmer", Random.Range(7, 9), false);
             player.enabled = false;
             done = true;
         }
         if (other.tag == "Player" && check == 5)
         {
-            Dialogue.Show("...", "Farmer", 4);
+            Dialogue.Show("...", "Farmer", 4, true);
         }
         if (other.tag == "Player" && check == 6 && done == false)
         {
-            Dialogue.Show("Nice, one more thing", "Farmer", Random.Range(9, 11));
+            Dialogue.Show("Nice, one more thing", "Farmer", Random.Range(9, 11), false);
             player.enabled = false;
             done = true;
         }
         if (other.tag == "Player" && check == 7)
         {
-            Dialogue.Show("...", "Farmer", 4);
+            Dialogue.Show("...", "Farmer", 4, true);
         }
         if (other.tag == "Player" && check == 8 && done == false)
         {
-            Dialogue.Show("All done? I need one more thing...", "Farmer", 11);
+            Dialogue.Show("All done? I need one more thing...", "Farmer", 11, false);
             player.enabled = false;
             done = true;
         }
         if (other.tag == "Player" && check == 9)
         {
-            Dialogue.Show("It's ok if you decide to leave...", "Farmer", 4);
+            Dialogue.Show("It's ok if you decide to leave...", "Farmer", 4, true);
         }
     }
 

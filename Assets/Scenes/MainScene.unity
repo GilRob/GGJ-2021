@@ -9014,6 +9014,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 292816072}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &292899838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d4e0829fceeb49a4ebb299c4c68539c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 322672858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &292899841
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292899838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: d4e0829fceeb49a4ebb299c4c68539c2, type: 3}
 --- !u!1001 &295020787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9677,17 +9697,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 56.29
+      value: 56.17
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.44
+      value: 0.47
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.5
+      value: 8.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
@@ -9732,7 +9752,12 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
         type: 3}
       propertyPath: m_Name
-      value: garbagebag (3)
+      value: Garb
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 531dda05c87bb5d4ebb54bc5ee97a11b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Interactable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 531dda05c87bb5d4ebb54bc5ee97a11b, type: 3}
@@ -27699,8 +27724,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 239484433}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &947942441
-BoxCollider:
+--- !u!64 &947942439
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -27709,9 +27734,26 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 0d12901cedfb5df4db5a782b2f21c9da, type: 3}
+--- !u!54 &947942440
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947942438}
   serializedVersion: 2
-  m_Size: {x: 0.0038936166, y: 0.012657704, z: 0.012140149}
-  m_Center: {x: 6.39077e-11, y: -0.0010876349, z: 0.0060700746}
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!4 &948256335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 91ebc569220588449956bf17f4feb2af,
@@ -30172,7 +30214,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4711208715938537054, guid: 531dda05c87bb5d4ebb54bc5ee97a11b, type: 3}
 --- !u!4 &1042440427 stripped
@@ -30181,6 +30223,22 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 306841314}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &1042440428
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042440423}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &1042611063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31306,7 +31364,7 @@ MonoBehaviour:
   - I can pay you.
   - You have to scratch my back before I scratch yours.
   - What?
-  - Go find my axe somewhere round this here barn. Lost it round the water.
+  - Go find my axe somewhere round this here farm. Lost it round the water.
   - Uh...Sure.
   sceneAxe:
   - My Axe...
@@ -31370,7 +31428,7 @@ MonoBehaviour:
   - What else do you need?
   - There's some garbage out the back, just toss those away and we'll be square...
   - I'll see what I can do, thanks.
-  activeTask: 0
+  activeTask: 7
   player: {fileID: 1606397689}
 --- !u!225 &1089098153
 CanvasGroup:
@@ -44931,6 +44989,7 @@ MonoBehaviour:
   cleanToilet: {fileID: 1594048070546970594, guid: 31f87693c5ffb304f969eaec547f9b87,
     type: 3}
   cleanMatt: {fileID: 2100000, guid: 2af15f05587eb5140bbc5d5d76cf6ab2, type: 2}
+  gasCanister: {fileID: 947942438}
 --- !u!143 &1606397689 stripped
 CharacterController:
   m_CorrespondingSourceObject: {fileID: 4938502113020403185, guid: 23492cb38d2f7b84bb41faffb4260fee,

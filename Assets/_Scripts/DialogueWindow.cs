@@ -59,7 +59,7 @@ public class DialogueWindow : MonoBehaviour
         }
     }
 
-    public void Show(string text, string name, int scene)
+    public void Show(string text, string name, int scene, bool oneShot)
     {
 
         currentScene = scene;
@@ -135,7 +135,7 @@ public class DialogueWindow : MonoBehaviour
             Debug.Log("Count: " + count);
             Debug.Log("Length: " + sceneOne.Length);
 
-            Show(sceneOne[count], name, currentScene);
+            Show(sceneOne[count], name, currentScene, false);
             if (count == sceneOne.Length - 1)
             {
                 Debug.Log("Triggered1");
@@ -162,7 +162,7 @@ public class DialogueWindow : MonoBehaviour
             count++;
             Debug.Log("Count: " + count);
 
-            Show(sceneToilet[count], name, currentScene);
+            Show(sceneToilet[count], name, currentScene, false);
             if (count == sceneToilet.Length - 1)
             {
                 Debug.Log("Triggered Toilet");
@@ -178,7 +178,7 @@ public class DialogueWindow : MonoBehaviour
             count++;
             Debug.Log("Count: " + count);
 
-            Show(sceneSweep[count], name, currentScene);
+            Show(sceneSweep[count], name, currentScene, false);
             if (count == sceneSweep.Length - 1)
             {
                 Debug.Log("Triggered Sweep");
@@ -196,7 +196,7 @@ public class DialogueWindow : MonoBehaviour
             count++;
             Debug.Log("Count: " + count);
 
-            Show(sceneBucket[count], name, currentScene);
+            Show(sceneBucket[count], name, currentScene, false);
             if (count == sceneBucket.Length - 1)
             {
 
@@ -212,7 +212,7 @@ public class DialogueWindow : MonoBehaviour
             count++;
             Debug.Log("Count: " + count);
 
-            Show(sceneEgg[count], name, currentScene);
+            Show(sceneEgg[count], name, currentScene, false);
             if (count == sceneEgg.Length - 1)
             {
                 Debug.Log("Triggered Egg");
@@ -227,7 +227,7 @@ public class DialogueWindow : MonoBehaviour
             count++;
             Debug.Log("Triggered Hay");
 
-            Show(sceneHay[count], name, currentScene);
+            Show(sceneHay[count], name, currentScene, false);
             if (count == sceneHay.Length - 1)
             {
                 activeTask = 5;
@@ -242,7 +242,7 @@ public class DialogueWindow : MonoBehaviour
 
             count++;
 
-            Show(scenePoop[count], name, currentScene);
+            Show(scenePoop[count], name, currentScene, false);
             if (count == scenePoop.Length - 1)
             {
                 activeTask = 6;
@@ -258,10 +258,10 @@ public class DialogueWindow : MonoBehaviour
             count++;
             Debug.Log("Triggered Final");
             Debug.Log("scenfinal" + sceneFinal.Length);
-            Show(sceneFinal[count], name, currentScene);
+            Show(sceneFinal[count], name, currentScene, false);
             if (count == sceneFinal.Length - 1)
             {
-                activeTask = 0;
+                activeTask = 7;
                 player.enabled = true;
                 active = false;
             }

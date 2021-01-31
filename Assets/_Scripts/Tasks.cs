@@ -21,6 +21,8 @@ public class Tasks : MonoBehaviour
     float timer = 0f;
     public Material cleanToilet;
     public Material cleanMatt;
+    public GameObject gasCanister;
+    private bool gasFull = false;
     //public int[] dialogues;
     //public int element;
     ///////////////////////////////////
@@ -60,7 +62,7 @@ public class Tasks : MonoBehaviour
                     player.currentItem.name = "Empty";
                     farmer.check++;
                     //element = Random.Range(0, dialogues.Count);
-                    farmer.Dialogue.Show("My axe...Need you to do a few more things", "Farmer", Random.Range(5, 7));
+                    farmer.Dialogue.Show("My axe...Need you to do a few more things", "Farmer", Random.Range(5, 7), false);
                     //dialogues.RemoveAt(element);
                     pMovement.enabled = false;
                     farmer.done = true;
@@ -255,6 +257,44 @@ public class Tasks : MonoBehaviour
                 }
             }
         }
+        //////
+        if (dialogues.activeTask == 7)
+        {
+            
+            if (player.hitInfo.collider.name == "Garb")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    Destroy(player.hitInfo.collider.gameObject);
+                    player.currentlyHolding = false;
+                    player.currentItem = new GameObject();
+                    player.currentItem.name = "Empty";
+                    gasCanister.tag = "Interactable";
+                    dialogues.Show("Yo that's crazy still", "Player", 4, true);
+                }
+            }
+            //if(player.currentItem.name == "Empty" && player.hitInfo.collider.name == "GasCan")
+            //{
+            //    player.hitInfo.collider.tag = "Interactable";
+            //    Debug.Log("Siphon");
+            //}
+            if(player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Car")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    gasFull = true;
+                    Debug.Log("Siphon");
+
+                }
+            }
+            if (player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Boat" && gasFull == true)
+            {
+                Debug.Log("End");
+            }
+
+
+        }
+
         /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
         //Text Elements
