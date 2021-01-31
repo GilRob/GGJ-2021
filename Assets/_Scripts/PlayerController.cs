@@ -27,21 +27,32 @@ public class PlayerController : MonoBehaviour
     public Image fill;
     public Image bar;
 
-    RaycastHit hitInfo;
-    GameObject currentItem;
+    [HideInInspector]
+    public RaycastHit hitInfo;
+    [HideInInspector]
+    public GameObject currentItem;
     /////////UI////////////////////
     public Image cursor;
     public Sprite baseCursor;
     public Sprite InteractCursor;
     public Sprite InvestigateCursor;
     //////////////////////////////////
+    public Transform axePosition;
+    public Transform bucketPosition;
+    public Transform eggPosition;
+    [HideInInspector]
     public Transform holdPosition;
-    bool currentlyHolding = false;
+
+    [HideInInspector]
+    public bool currentlyHolding = false;
     Rigidbody itemRB;
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
+        currentItem = new GameObject();
+        currentItem.name = "Empty";
         itemRB = new Rigidbody();
+        holdPosition = new GameObject().transform;
     }
 
     void Update()
@@ -76,27 +87,27 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
         }
 
-        if (fill.fillAmount <= 0.01f)
-        {
-            isRunning = false;
-        }
-        if (isRunning)
-        {
-            fill.fillAmount -= staminaReduceSpeed * Time.deltaTime;
-            bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
-        }
-        else
-        {
-            if (x > 0 || y > 0)
-            {
-                fill.fillAmount += staminaBackupWalking * Time.deltaTime;
-            }
-            else
-            {
-                fill.fillAmount += staminaBackupStop * Time.deltaTime;
-            }
-            bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
-        }
+        // if (fill.fillAmount <= 0.01f)
+        // {
+        //     isRunning = false;
+        // }
+        // if (isRunning)
+        // {
+        //     fill.fillAmount -= staminaReduceSpeed * Time.deltaTime;
+        //     bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
+        // }
+        // else
+        // {
+        //     if (x > 0 || y > 0)
+        //     {
+        //         fill.fillAmount += staminaBackupWalking * Time.deltaTime;
+        //     }
+        //     else
+        //     {
+        //         fill.fillAmount += staminaBackupStop * Time.deltaTime;
+        //     }
+        //     bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
+        // }
 
         if (isRunning)
         {
@@ -125,8 +136,12 @@ public class PlayerController : MonoBehaviour
 
         velocity.y += fallingSpeed * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+        Interact();
+        
+    }
 
-        // player interact object
+    void Interact()
+    {
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 100.0f))
         {
 
@@ -149,8 +164,8 @@ public class PlayerController : MonoBehaviour
             if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false)
             {
                 currentItem = hitInfo.transform.gameObject;
+                
                 currentlyHolding = true;
-                //Rigidbody itemRB = currentItem.AddComponent<Rigidbody>();
                 currentItem.GetComponent<Rigidbody>().useGravity = false;
                 currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
             }
@@ -159,18 +174,34 @@ public class PlayerController : MonoBehaviour
 
         if(currentItem != null && currentlyHolding == true)
         {
+            if(currentItem.name == "Axe" )
+            {
+                holdPosition.position = axePosition.position;
+                holdPosition.rotation = axePosition.rotation;
+            }
+            else if(currentItem.name == "bucket")
+            {
+                holdPosition.position = bucketPosition.position;
+                holdPosition.rotation = bucketPosition.rotation;
+            }
+            else if(currentItem.name == "Egg(Clone)" ||  currentItem.name == "toiletBrush"|| currentItem.name == "pitchFork")
+            {
+                holdPosition.position = eggPosition.position;
+                holdPosition.rotation = eggPosition.rotation;
+            }
+
             currentItem.transform.position = holdPosition.position;
             currentItem.transform.rotation = holdPosition.rotation;
         }
 
         if(Input.GetButtonDown("Fire1") && currentlyHolding == true)
         {
-            //currentItem.transform.position = ;
             currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             currentItem.GetComponent<Rigidbody>().useGravity = true;
             currentItem.GetComponent<Rigidbody>().AddForce(new Vector3(currentItem.transform.forward.x * 200f, currentItem.transform.forward.y * 100f, currentItem.transform.forward.z * 200f));
             currentlyHolding = false;
-            Debug.Log("Drop");
+            currentItem = new GameObject();
+            currentItem.name = "Empty";
         }
     }
 }
