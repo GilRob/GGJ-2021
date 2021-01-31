@@ -8,8 +8,8 @@ public class Farmer : MonoBehaviour
     public string[] sceneOne;
     public DialogueWindow Dialogue;
     public CharacterController player;
-    private int check = 1;
-    private bool done = false;
+    public int check = 1;
+    public bool done = false;
     BoxCollider trigger;
     // Start is called before the first frame update
     void Start()
@@ -35,6 +35,10 @@ public class Farmer : MonoBehaviour
         {
             Dialogue.Show("I ain't got all day boy", "Farmer", 2);
         }
+        //if (other.tag == "Player" && check == 3)
+        //{
+        //    Dialogue.Show("Need you to do a few more things", "Farmer", 3);
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -43,6 +47,7 @@ public class Farmer : MonoBehaviour
         {
             Dialogue.Close();
             check++;
+            done = false;
 
         }
         if (other.tag == "Player" && check == 2)

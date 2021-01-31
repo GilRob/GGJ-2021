@@ -12,7 +12,7 @@ public class Tasks : MonoBehaviour
     bool[] taskList;
 
     bool gotEggs = false;
-
+    Farmer farmer;
 //toilet variables
     float startTime = 0f;
     float holdTime = 3f;
@@ -24,6 +24,8 @@ public class Tasks : MonoBehaviour
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
+        farmer = GameObject.FindObjectOfType<Farmer>();
+
         taskList = new bool[6];
 
         for(int i =0; i < 6;i++)
@@ -49,6 +51,11 @@ public class Tasks : MonoBehaviour
                     player.currentlyHolding = false;
                     player.currentItem = new GameObject();
                     player.currentItem.name = "Empty";
+                    farmer.check++;
+                    farmer.Dialogue.Show("Need you to do a few more things", "Farmer", 3);
+                    player.enabled = false;
+                    farmer.done = true;
+
                 }
             }
         }
