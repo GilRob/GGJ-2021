@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     public bool isRunning = false;
     public bool isCrouching = false;
+    public bool isStop;
 
     public Image fill;
     public Image bar;
@@ -108,6 +109,11 @@ public class PlayerController : MonoBehaviour
         {
             controller.Move(direct * walkingSpeed * Time.deltaTime);
         }
+
+        if (x > 0 || y > 0)
+            isStop = false;
+        else
+            isStop = true;
 
         // jump with keybboard & controller
         if(Input.GetButtonDown("Jump") && isGrounded && !isCrouching)
