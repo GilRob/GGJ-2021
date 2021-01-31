@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2024300577
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2024300578}
-  m_Layer: 9
-  m_Name: holdPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2024300578
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2024300577}
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0.6299999, y: 0.21, z: 0.9069996}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4938502114170085195}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
 --- !u!1 &4938502112716773449
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,13 +154,22 @@ MonoBehaviour:
     m_Bits: 256
   isRunning: 0
   isCrouching: 0
+  isJumping: 0
+  isStop: 0
   fill: {fileID: 0}
   bar: {fileID: 0}
+  currentItem: {fileID: 0}
   cursor: {fileID: 0}
   baseCursor: {fileID: 21300000, guid: 6a1f11d5396c4fe47a39e9147462537b, type: 3}
   InteractCursor: {fileID: 21300000, guid: 550167d3e97407b4985b65e92b4f4dbb, type: 3}
   InvestigateCursor: {fileID: 21300000, guid: f1678f2c979fb8a4785566941d25b3e6, type: 3}
-  holdPosition: {fileID: 2024300578}
+  axePosition: {fileID: 0}
+  bucketPosition: {fileID: 0}
+  eggPosition: {fileID: 0}
+  holdPosition: {fileID: 0}
+  currentlyHolding: 0
+  stamina: {fileID: 0}
+  wheat: {fileID: 0}
 --- !u!143 &4938502113020403185
 CharacterController:
   m_ObjectHideFlags: 0
@@ -239,7 +218,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2024300578}
+  - {fileID: 3012754804390222884}
+  - {fileID: 6597003379918131766}
+  - {fileID: 8118776450931810283}
   m_Father: {fileID: 4938502113020403186}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -316,3 +297,93 @@ MonoBehaviour:
   shakingSpeed: 0.18
   shakingAmount: 0.2
   crouchReducedHeight: 1.2
+--- !u!1 &5048965031362043157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6597003379918131766}
+  m_Layer: 9
+  m_Name: BucketPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6597003379918131766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5048965031362043157}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: -2.678, y: 0.53999984, z: -12.033001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4938502114170085195}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+--- !u!1 &7493107367289067868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3012754804390222884}
+  m_Layer: 9
+  m_Name: AxePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3012754804390222884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493107367289067868}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: -2.5100002, y: 1.2099999, z: -12.033001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4938502114170085195}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+--- !u!1 &7565597193781613103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8118776450931810283}
+  m_Layer: 9
+  m_Name: EggPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8118776450931810283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7565597193781613103}
+  m_LocalRotation: {x: -0.0154004935, y: 0.7069391, z: 0.015400495, w: 0.7069391}
+  m_LocalPosition: {x: -2.678, y: 0.76999986, z: -12.033001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4938502114170085195}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -2.496, y: 90.00001, z: 0}

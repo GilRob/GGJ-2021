@@ -181,7 +181,40 @@ public class Tasks : MonoBehaviour
             }
         }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+    //sweep the porch
+    if(player.hitInfo.collider != null)
+        {
+            if(player.hitInfo.collider.name == "porch" && taskList[6] == false)
+            {
+                if(Input.GetButtonDown("Interact") && player.currentItem.name == "broom")
+                {
+                    startTime = Time.deltaTime;
+                }
 
+                if(Input.GetButton("Interact") && player.currentItem.name == "broom")
+                {
+                    timer += Time.deltaTime;
 
+                   // Debug.Log(Time.deltaTime);
+                    if (timer >= (startTime + holdTime))
+                    {
+                        taskList[6] = true;
+                        timer = 0;
+                        Destroy(player.hitInfo.collider.gameObject);
+                        Destroy(player.currentItem);
+                        player.currentlyHolding = false;
+                        player.currentItem = new GameObject();
+                        player.currentItem.name = "Empty";
+                        Debug.Log("porch Cleaned");
+                        
+                    }
+                }
+                else
+                {
+                    timer = 0;
+                }
+            }
+        }
+/////////////////////////////////////////////////////////////////////////////
     }
 }

@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
         float speed = (transform.position - this.mLastPosition).magnitude / Time.deltaTime;
         this.mLastPosition = transform.position;
 
-        Debug.Log(speed);
+        //Debug.Log(speed);
 
         // check if player on ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDis, groundMask);
