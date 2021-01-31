@@ -163,7 +163,9 @@ public class Tasks : MonoBehaviour
                         {
                             taskList[4] = true;
                             timer = 0;
+                            
                             player.hitInfo.collider.GetComponent<Renderer>().material = cleanToilet;
+                            
                             Destroy(player.currentItem);
                             player.currentlyHolding = false;
                             player.currentItem = new GameObject();
@@ -260,103 +262,106 @@ public class Tasks : MonoBehaviour
         //////
         if (dialogues.activeTask == 7)
         {
-            
-            if (player.hitInfo.collider.name == "Garb")
+            if (player.hitInfo.collider != null)
             {
-                if (Input.GetButtonDown("Interact"))
+                if (player.hitInfo.collider.name == "Garb")
                 {
-                    Destroy(player.hitInfo.collider.gameObject);
-                    player.currentlyHolding = false;
-                    player.currentItem = new GameObject();
-                    player.currentItem.name = "Empty";
-                    gasCanister.tag = "Interactable";
-                    dialogues.Show("Yo that's crazy still", "Player", 4, true);
+                    if (Input.GetButtonDown("Interact"))
+                    {
+                        Destroy(player.hitInfo.collider.gameObject);
+                        player.currentlyHolding = false;
+                        player.currentItem = new GameObject();
+                        player.currentItem.name = "Empty";
+                        gasCanister.tag = "Interactable";
+                        dialogues.Show("Yo that's crazy still", "Player", 4, true);
+                    }
+                }
+                //if(player.currentItem.name == "Empty" && player.hitInfo.collider.name == "GasCan")
+                //{
+                //    player.hitInfo.collider.tag = "Interactable";
+                //    Debug.Log("Siphon");
+                //}
+                if(player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Car")
+                {
+                    if (Input.GetButtonDown("Interact"))
+                    {
+                        gasFull = true;
+                        Debug.Log("Siphon");
+
+                    }
+                }
+                if (player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Boat" && gasFull == true)
+                {
+                    Debug.Log("End");
                 }
             }
-            //if(player.currentItem.name == "Empty" && player.hitInfo.collider.name == "GasCan")
-            //{
-            //    player.hitInfo.collider.tag = "Interactable";
-            //    Debug.Log("Siphon");
-            //}
-            if(player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Car")
-            {
-                if (Input.GetButtonDown("Interact"))
-                {
-                    gasFull = true;
-                    Debug.Log("Siphon");
-
-                }
-            }
-            if (player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Boat" && gasFull == true)
-            {
-                Debug.Log("End");
-            }
-
 
         }
         ////
-
-        if (player.hitInfo.collider.name == "FarmSign")
+        if (player.hitInfo.collider != null)
         {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "FarmSign")
             {
-                dialogues.Show("'Hatbek Dream Farms, Fresh Local &  \u0022Fun\u0022!' A little ominous if anything", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("'Hatbek Dream Farms, Fresh Local &  \u0022Fun\u0022!' A little ominous if anything", "Player", 4, true);
+                }
             }
-        }
-        if (player.hitInfo.collider.name == "poop")
-        {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "poop")
             {
-                dialogues.Show("Issa poop", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Issa poop", "Player", 4, true);
+                }
             }
-        }
-        if (player.hitInfo.collider.name == "Cow")
-        {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "Cow")
             {
-                dialogues.Show("Sup cow", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Sup cow", "Player", 4, true);
+                }
             }
-        }
-        if (player.hitInfo.collider.name == "rickyPainting")
-        {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "rickyPainting")
             {
-                dialogues.Show("Hmph", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Hmph", "Player", 4, true);
+                }
             }
-        }
-        if (player.hitInfo.collider.name == "ChickenWithAnim (4)")
-        {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "ChickenWithAnim (4)")
             {
-                dialogues.Show("Sup chick", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Sup chick", "Player", 4, true);
+                }
             }
-        }
-        if (player.hitInfo.collider.name == "Boat")
-        {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "Boat")
             {
-                dialogues.Show("Wonder if this is working...", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Wonder if this is working...", "Player", 4, true);
+                }
             }
-        }
-        if (player.hitInfo.collider.name == "eashPainting")
-        {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "eashPainting")
             {
-                dialogues.Show("Getting a lot of negative vibes from this", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Getting a lot of negative vibes from this", "Player", 4, true);
+                }
             }
-        }
-        if (player.hitInfo.collider.name == "fossilPainting")
-        {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "fossilPainting")
             {
-                dialogues.Show("Kinda cute not gonna lie", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Kinda cute not gonna lie", "Player", 4, true);
+                }
             }
-        }
-        if (player.hitInfo.collider.name == "RockingChair")
-        {
-            if (Input.GetButtonDown("Interact"))
+            if (player.hitInfo.collider.name == "RockingChair")
             {
-                dialogues.Show("Of course this man is gonna have a rocking chair", "Player", 4, true);
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Of course this man is gonna have a rocking chair", "Player", 4, true);
+                }
             }
         }
         /////////////////////////////////////////////////////////////////////////////
@@ -370,23 +375,23 @@ public class Tasks : MonoBehaviour
             {
                 text.text = "Press E to Pickup Axe";
             }
-            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "broom")
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "broom" && dialogues.activeTask == 2)
             {
                 text.text = "Press E to Pickup Broom";
             }
-            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "toiletBrush")
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "toiletBrush" && dialogues.activeTask == 1)
             {
                 text.text = "Press E to Pickup Toilet Brush";
             }
-            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "bucket")
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "bucket" && dialogues.activeTask == 3)
             {
                 text.text = "Press E to Pickup Bucket";
             }
-            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "ChickenCoop" && taskList[3] == false)
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "ChickenCoop" && taskList[3] == false && dialogues.activeTask == 4)
             {
                 text.text = "Press E to Pickup Egg";
             }
-            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "pitchFork")
+            else if (player.currentItem.name == "Empty" && player.hitInfo.collider.name == "pitchFork" && dialogues.activeTask == 6)
             {
                 text.text = "Press E to Pickup Pitchfork";
             }
@@ -396,29 +401,52 @@ public class Tasks : MonoBehaviour
             {
                 text.text = "Press E to Give Axe";
             }
-            else if (player.currentItem.name == "broom" && player.hitInfo.collider.name == "matt")
+            else if (player.currentItem.name == "broom" && player.hitInfo.collider.name == "matt" && dialogues.activeTask == 2)
             {
                 text.text = "Hold E to Sweep Mat";
             }
-            else if (player.currentItem.name == "toiletBrush" && player.hitInfo.collider.name == "toilet")
+            else if (player.currentItem.name == "toiletBrush" && player.hitInfo.collider.name == "toilet" && dialogues.activeTask == 1)
             {
                 text.text = "Hold E to Clean Toilet";
             }
-            else if (player.currentItem.name == "bucket" && player.hitInfo.collider.name == "ChickenCoop")
+            else if (player.currentItem.name == "bucket" && player.hitInfo.collider.name == "ChickenCoop" && dialogues.activeTask == 3)
             {
                 text.text = "Press E to Feed Chickens";
             }
-            else if (player.currentItem.name == "Egg(Clone)" && player.hitInfo.collider.name == "EggBasket")
+            else if (player.currentItem.name == "Egg(Clone)" && player.hitInfo.collider.name == "EggBasket" && dialogues.activeTask == 4)
             {
                 text.text = "Press E to Place Eggs In Basket";
             }
-            else if (player.currentItem.name == "pitchFork" && player.hitInfo.collider.name == "poop")
+            else if (player.currentItem.name == "pitchFork" && player.hitInfo.collider.name == "poop" && dialogues.activeTask == 6)
             {
                 text.text = "Hold E to Clean Poop";
             }
-            else if (Vector3.Distance(this.transform.position, Hayroll.transform.position) <= 3f && taskList[1] == false)
+            else if (Vector3.Distance(this.transform.position, Hayroll.transform.position) <= 3f && taskList[1] == false && dialogues.activeTask == 5)
             {
                 text.text = "Move Forward to Roll Hay Towards the Barn";
+            }
+            else if(dialogues.activeTask == 7)
+            {
+                if (player.hitInfo.collider.name == "Garb")
+                {
+                    text.text = "Press E to Pickup Trash";
+                }
+                else if(player.hitInfo.collider.name == "GasCan" && gasCanister.tag == "Interactable")
+                {
+                    text.text = "Press E to Pickup Gas Can";
+                }
+                else if(player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Car" && gasFull == false)
+                {
+                    text.text = "Press E to Siphon";
+                }
+                else if(player.currentItem.name == "GasCan" && player.hitInfo.collider.name == "Boat" && gasFull == true)
+                {
+                    text.text = "Press E to Escape";
+                }
+                else
+                {
+                    text.text = "";
+                }
             }
             else
             {

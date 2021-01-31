@@ -40,6 +40,10 @@ public class PlayerController : MonoBehaviour
     public Transform axePosition;
     public Transform bucketPosition;
     public Transform eggPosition;
+    public Transform GasPosition;
+     public Transform broomPosition;
+    public Transform rakePosition;
+    public Transform brushPosition;
     [HideInInspector]
     public Transform holdPosition;
 
@@ -167,7 +171,7 @@ public class PlayerController : MonoBehaviour
 
     void Interact()
     {
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 100.0f, layerMask))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, 20.0f, layerMask))
         {
 
             if(hitInfo.collider.tag == "Interactable")
@@ -199,7 +203,7 @@ public class PlayerController : MonoBehaviour
 
         if(currentItem != null && currentlyHolding == true)
         {
-            if(currentItem.name == "Axe" )
+            if(currentItem.name == "Axe")
             {
                 holdPosition.position = axePosition.position;
                 holdPosition.rotation = axePosition.rotation;
@@ -209,10 +213,30 @@ public class PlayerController : MonoBehaviour
                 holdPosition.position = bucketPosition.position;
                 holdPosition.rotation = bucketPosition.rotation;
             }
-            else if(currentItem.name == "Egg(Clone)" ||  currentItem.name == "toiletBrush"|| currentItem.name == "pitchFork")
+            else if(currentItem.name == "Egg(Clone)")
             {
                 holdPosition.position = eggPosition.position;
                 holdPosition.rotation = eggPosition.rotation;
+            }
+            else if(currentItem.name == "GasCan")
+            {
+                holdPosition.position = GasPosition.position;
+                holdPosition.rotation = GasPosition.rotation;
+            }
+            else if(currentItem.name == "broom")
+            {
+                holdPosition.position = broomPosition.position;
+                holdPosition.rotation = broomPosition.rotation;
+            }
+            else if(currentItem.name == "pitchFork")
+            {
+                holdPosition.position = rakePosition.position;
+                holdPosition.rotation = rakePosition.rotation;
+            }
+             else if(currentItem.name == "toiletBrush")
+            {
+                holdPosition.position = brushPosition.position;
+                holdPosition.rotation = brushPosition.rotation;
             }
 
             currentItem.transform.position = holdPosition.position;
