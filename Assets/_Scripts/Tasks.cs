@@ -12,7 +12,11 @@ public class Tasks : MonoBehaviour
     bool[] taskList;
     bool gotEggs = false;
 
+    float toiletStartTime = 0f;
+    float toiletHoldTime = 3f;
 
+    float timer = 0f;
+    bool held = false;
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
@@ -103,6 +107,45 @@ public class Tasks : MonoBehaviour
 
         }    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //clean toilet
+        if(player.hitInfo.collider != null)
+        {
+            if(player.hitInfo.collider.name == "toilet" && taskList[4] == false)
+            {
+                 if(Input.GetButtonDown("Interact") && player.currentItem.name == "toiletBrush")
+                {
+                    toiletStartTime = Time.deltaTime;
+                }
+
+                if(Input.GetButton("Interact") && player.currentItem.name == "toiletBrush" && held == false)
+                {
+                    timer += Time.deltaTime;
+
+                   // Debug.Log(Time.deltaTime);
+                    if (timer >= (toiletStartTime + toiletHoldTime))
+                    {
+                        taskList[4] = true;
+                        Destroy(player.currentItem);
+                        player.currentlyHolding = false;
+                        player.currentItem = new GameObject();
+                        player.currentItem.name = "Empty";
+                        Debug.Log("Toilet Cleaned");
+                        
+                    }
+                }
+                else
+                {
+                    toiletStartTime = Time.deltaTime;
+                }
+            }
+        }
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
     }
 }
