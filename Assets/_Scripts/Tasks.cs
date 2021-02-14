@@ -60,7 +60,7 @@ public class Tasks : MonoBehaviour
         {
             if (player.hitInfo.collider.tag == "Farmer")
             {
-                if (Input.GetButtonDown("Interact") && player.currentItem.name == "Axe")
+                if (Input.GetButtonDown("Interact") && player.currentItem.name == "Axe" && farmer.inside == true)
                 {
                     Debug.Log("Respect Fam");
                     taskList[0] = true;
