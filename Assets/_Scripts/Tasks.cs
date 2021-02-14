@@ -369,7 +369,7 @@ public class Tasks : MonoBehaviour
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Kinda cute not gonna lie", "Player", 4, true);
+                    dialogues.Show("Kinda cute not gonna lie, love the fossil gurl aesthetic", "Player", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "RockingChair")
