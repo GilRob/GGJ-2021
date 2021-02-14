@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public GameObject player;
     public List<Transform> potrolPoints;
     public float playerInSightDistance = 5f;
     public float hearWalkingDistance;
@@ -15,7 +14,8 @@ public class EnemyAI : MonoBehaviour
     public float idelTime = 2f;
     public float stopTime = 3f;
     public float viewAngle;
-    
+
+    GameObject player;
     NavMeshAgent navMeshAgent;
     Vector3 patrolPoint;
     bool patrolPointSet;
@@ -40,6 +40,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = this.gameObject.GetComponent<NavMeshAgent>();
         enemyState = EnemyState.Patrol;
         patrolPointSet = false;
@@ -50,6 +51,13 @@ public class EnemyAI : MonoBehaviour
         animator = this.gameObject.GetComponent<Animator>();
         animator.SetBool("animWalk", true);
         animator.SetBool("animRun", false);
+
+        potrolPoints.Clear();
+        GameObject[] allPoints = GameObject.FindGameObjectsWithTag("PotrolPoint");
+        for(int i = 0; i < allPoints.Length; i++)
+        {
+            potrolPoints.Add(allPoints[i].transform);
+        }
     }
 
     void Update()
