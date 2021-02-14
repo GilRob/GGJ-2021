@@ -99,8 +99,7 @@ public class PlayerController : MonoBehaviour
             else
                 isCrouching = true;
         }
-
-        if (Input.GetButton("Run") && (x > 0 || y > 0) && !isCrouching)
+        if (Input.GetButton("Run") && (x != 0 || y != 0) && !isCrouching)
         {
             isRunning = true;
         }
@@ -131,7 +130,7 @@ public class PlayerController : MonoBehaviour
          }
          else
          {
-             if (x > 0 || y > 0)
+             if (x != 0 || y != 0)
              {
                  fill.fillAmount += staminaBackupWalking * Time.deltaTime;
              }
@@ -155,7 +154,7 @@ public class PlayerController : MonoBehaviour
             controller.Move(direct * walkingSpeed * Time.deltaTime);
         }
 
-        if (x > 0 || y > 0)
+        if (x != 0 || y != 0)
             isStop = false;
         else
             isStop = true;
