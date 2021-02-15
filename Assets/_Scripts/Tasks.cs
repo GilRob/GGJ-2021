@@ -330,11 +330,12 @@ public class Tasks : MonoBehaviour
                     dialogues.Show("Issa poop", "Player", 4, true);
                 }
             }
-            if (player.hitInfo.collider.name == "Cow")
+            if (player.hitInfo.collider.name == "Cow_Brenda")
             {
                 if (Input.GetButtonDown("Interact"))
                 {
                     dialogues.Show("Sup cow", "Player", 4, true);
+                    dialogues.Show("Moo.", "Cow", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "rickyPainting")
@@ -369,7 +370,7 @@ public class Tasks : MonoBehaviour
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Kinda cute not gonna lie", "Player", 4, true);
+                    dialogues.Show("Kinda cute not gonna lie, love the fossil gurl aesthetic", "Player", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "RockingChair")
@@ -377,6 +378,20 @@ public class Tasks : MonoBehaviour
                 if (Input.GetButtonDown("Interact"))
                 {
                     dialogues.Show("Of course this man is gonna have a rocking chair", "Player", 4, true);
+                }
+            }
+            if (player.hitInfo.collider.name == "Joker")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("What......What is this.....", "Player", 4, true);
+                }
+            }
+            if (player.hitInfo.collider.name == "Tractor")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Doesn't look like this has been used in a long time", "Player", 4, true);
                 }
             }
         }
