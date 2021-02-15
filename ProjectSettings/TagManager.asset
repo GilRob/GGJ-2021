@@ -11,6 +11,9 @@ TagManager:
   - Interactable
   - Farmer
   - Wheat
+  - NavBarrier
+  - Enemy
+  - PotrolPoint
   layers:
   - Default
   - TransparentFX

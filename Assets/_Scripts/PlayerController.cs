@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     CharacterController controller;
     Vector3 velocity;
+    Vector3 startPos;
+    Quaternion startRot;
     float groundDis = 0.4f;
     public LayerMask groundMask;
     bool isGrounded;
@@ -61,6 +63,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
+        startPos = this.transform.position;
+        startRot = this.transform.rotation;
         currentItem = new GameObject();
         currentItem.name = "Empty";
         itemRB = new Rigidbody();
@@ -95,8 +99,7 @@ public class PlayerController : MonoBehaviour
             else
                 isCrouching = true;
         }
-
-        if (Input.GetButton("Run") && (x > 0 || y > 0) && !isCrouching)
+        if (Input.GetButton("Run") && (x != 0 || y != 0) && !isCrouching)
         {
             isRunning = true;
         }
@@ -127,7 +130,7 @@ public class PlayerController : MonoBehaviour
          }
          else
          {
-             if (x > 0 || y > 0)
+             if (x != 0 || y != 0)
              {
                  fill.fillAmount += staminaBackupWalking * Time.deltaTime;
              }
@@ -151,7 +154,7 @@ public class PlayerController : MonoBehaviour
             controller.Move(direct * walkingSpeed * Time.deltaTime);
         }
 
-        if (x > 0 || y > 0)
+        if (x != 0 || y != 0)
             isStop = false;
         else
             isStop = true;
@@ -279,6 +282,17 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Wheat")
         {
             inWheat = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            controller.enabled = false;
+            this.transform.position = startPos;
+            this.transform.rotation = startRot;
+            controller.enabled = true;
         }
     }
 }

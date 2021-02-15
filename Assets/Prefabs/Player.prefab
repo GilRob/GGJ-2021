@@ -144,7 +144,7 @@ MonoBehaviour:
   runningSpeed: 16
   crouchingSpeed: 3
   staminaReduceSpeed: 0.3
-  staminaBackupWalking: 0.1
+  staminaBackupWalking: 0.15
   staminaBackupStop: 0.3
   groundCheck: {fileID: 4938502112716773448}
   fallingSpeed: -50
@@ -166,6 +166,10 @@ MonoBehaviour:
   axePosition: {fileID: 0}
   bucketPosition: {fileID: 0}
   eggPosition: {fileID: 0}
+  GasPosition: {fileID: 0}
+  broomPosition: {fileID: 0}
+  rakePosition: {fileID: 0}
+  brushPosition: {fileID: 0}
   holdPosition: {fileID: 0}
   currentlyHolding: 0
   stamina: {fileID: 0}

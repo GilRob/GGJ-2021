@@ -29,6 +29,8 @@ public class DialogueWindow : MonoBehaviour
     int ncount = 1;
     CanvasGroup group;
 
+    public AudioSource source;
+
     public CharacterController player;
 
     // Start is called before the first frame update
@@ -70,7 +72,7 @@ public class DialogueWindow : MonoBehaviour
         CurrentText = text;
         speaker.text = name;
         if (oneShot == false)
-        active = true;
+            active = true;
         StartCoroutine(DisplayText());
     }
 
@@ -100,7 +102,7 @@ public class DialogueWindow : MonoBehaviour
         {
             text.text += c;
 
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return new WaitForSecondsRealtime(0.05f);
         }
         next.enabled = true;
         scrollDone = true;
@@ -123,6 +125,7 @@ public class DialogueWindow : MonoBehaviour
         if (ncount == 0)
         {
             name = "Farmer";
+            source.Play();
             ncount++;
         }
         else if (ncount == 1)
@@ -136,7 +139,7 @@ public class DialogueWindow : MonoBehaviour
             count++;
 
             Debug.Log("Count: " + count);
-            Debug.Log("Length: " + sceneOne.Length);
+            Debug.Log("Length: " + sceneOne.Length); 
 
             Show(sceneOne[count], name, currentScene, false);
             if (count == sceneOne.Length - 1)
@@ -261,6 +264,7 @@ public class DialogueWindow : MonoBehaviour
             count++;
             Debug.Log("Triggered Final");
             Debug.Log("scenfinal" + sceneFinal.Length);
+
             Show(sceneFinal[count], name, currentScene, false);
             if (count == sceneFinal.Length - 1)
             {

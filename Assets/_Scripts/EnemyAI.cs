@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public GameObject player;
     public List<Transform> potrolPoints;
     public float playerInSightDistance = 5f;
     public float hearWalkingDistance;
@@ -13,12 +12,15 @@ public class EnemyAI : MonoBehaviour
     public float potrollingSpeed = 5f;
     public float chasingSpeed = 10f;
     public float idelTime = 2f;
+    public float stopTime = 3f;
     public float viewAngle;
-    
+
+    GameObject player;
     NavMeshAgent navMeshAgent;
     Vector3 patrolPoint;
     bool patrolPointSet;
     float idelTimer;
+    float stopTimer;
     bool playerInSight;
     Animator animator;
 
@@ -30,22 +32,32 @@ public class EnemyAI : MonoBehaviour
     {
         Idle,
         Patrol,
-        Chase
+        Chase,
+        Stop
     }
     
     EnemyState enemyState;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = this.gameObject.GetComponent<NavMeshAgent>();
         enemyState = EnemyState.Patrol;
         patrolPointSet = false;
         idelTimer = idelTime;
+        stopTimer = stopTime;
         navMeshAgent.speed = potrollingSpeed;
         this.gameObject.GetComponent<SphereCollider>().radius = playerInSightDistance;
         animator = this.gameObject.GetComponent<Animator>();
         animator.SetBool("animWalk", true);
         animator.SetBool("animRun", false);
+
+        potrolPoints.Clear();
+        GameObject[] allPoints = GameObject.FindGameObjectsWithTag("PotrolPoint");
+        for(int i = 0; i < allPoints.Length; i++)
+        {
+            potrolPoints.Add(allPoints[i].transform);
+        }
     }
 
     void Update()
@@ -60,6 +72,9 @@ public class EnemyAI : MonoBehaviour
                 break;
             case EnemyState.Chase:
                 EnemyChasing();
+                break;
+            case EnemyState.Stop:
+                EnemyStopping();
                 break;
         }
     }
@@ -244,6 +259,35 @@ public class EnemyAI : MonoBehaviour
             {
                 enemyState = EnemyState.Idle;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "NavBarrier" && enemyState == EnemyState.Chase)
+        {
+            enemyState = EnemyState.Stop;
+            animator.SetBool("animIdel", true);
+            navMeshAgent.speed = 0;
+        }
+    }
+
+    void EnemyStopping()
+    {
+        stealthAudioSource.mute = false;
+        chaseAudioSource.mute = true;
+
+        stopTimer -= Time.deltaTime;
+
+        if(stopTimer <= 0)
+        {
+            this.transform.eulerAngles = new Vector3(0, 120, 0);
+            stopTimer = stopTime;
+            enemyState = EnemyState.Patrol;
+            navMeshAgent.speed = potrollingSpeed;
+            animator.SetBool("animWalk", true);
+            animator.SetBool("animRun", false);
+            animator.SetBool("animIdel", false);
         }
     }
 }
