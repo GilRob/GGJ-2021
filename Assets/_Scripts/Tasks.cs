@@ -394,6 +394,21 @@ public class Tasks : MonoBehaviour
                     dialogues.Show("Doesn't look like this has been used in a long time", "Player", 4, true);
                 }
             }
+            if (player.hitInfo.collider.name == "Windmill")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Haha, just like in those Western movies", "Player", 4, true);
+                    //Debug.Log("interacting with windmill");
+                }
+            }
+            if (player.hitInfo.collider.name == "dirtPile")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("Who in their right mind would keep this much smelly trash so close to their house!?", "Player", 4, true);
+                }
+            }
         }
         /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////
