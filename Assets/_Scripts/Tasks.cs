@@ -54,7 +54,7 @@ public class Tasks : MonoBehaviour
             taskList[i] = false;
         }
 
-        toiletBrushAnim = GameObject.Find("toiletBrush").GetComponent<Animator>();
+        toiletBrushAnim = GameObject.Find("toiletBrush").GetComponentInChildren<Animator>();
         broomAnim = GameObject.Find("broom").GetComponent<Animator>();
         pitchForkAnim = GameObject.Find("pitchFork").GetComponent<Animator>();
 

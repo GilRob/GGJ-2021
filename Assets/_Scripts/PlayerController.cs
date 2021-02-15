@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip wheat;
     private int layerMask = ~(1 << 9);
 
+    public DialogueWindow dialogues;
+
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
@@ -193,7 +195,7 @@ public class PlayerController : MonoBehaviour
                 cursor.sprite = baseCursor;
             }
 
-            if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false)
+            if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "Axe")
             {
                 currentItem = hitInfo.transform.gameObject;
                 
@@ -201,7 +203,48 @@ public class PlayerController : MonoBehaviour
                 currentItem.GetComponent<Rigidbody>().useGravity = false;
                 currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
             }
-            
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "bucket" && dialogues.activeTask == 3)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "toiletBrush" && dialogues.activeTask == 1)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "pitchFork" && dialogues.activeTask == 6)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "broom" && dialogues.activeTask == 2)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "Garb" && dialogues.activeTask == 7)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "GasCan" && dialogues.activeTask == 7)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
         }
         
         if(hitInfo.collider == null)
