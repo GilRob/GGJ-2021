@@ -203,6 +203,12 @@ public class PlayerController : MonoBehaviour
             }
             
         }
+        
+        if(hitInfo.collider == null)
+        {
+            cursor.rectTransform.sizeDelta = new Vector2(5, 5);
+            cursor.sprite = baseCursor;
+        }
 
         if(currentItem != null && currentlyHolding == true)
         {
