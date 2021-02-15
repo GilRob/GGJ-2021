@@ -27,6 +27,8 @@ public class Tasks : MonoBehaviour
     private bool gasFull = false;
     public RawImage fade;
     private bool fadein = false;
+    public Image progressBar;
+    public Image progressOutline;
     //public int[] dialogues;
     //public int element;
     ///////////////////////////////////
@@ -36,6 +38,9 @@ public class Tasks : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerController>();
         farmer = GameObject.FindObjectOfType<Farmer>();
         pMovement = GameObject.FindObjectOfType<CharacterController>();
+        
+        progressBar.enabled = false;
+        progressOutline.enabled = false;
 
         taskList = new bool[7];
 
@@ -165,10 +170,16 @@ public class Tasks : MonoBehaviour
                     if (Input.GetButton("Interact") && player.currentItem.name == "toiletBrush")
                     {
                         timer += Time.deltaTime;
+                        progressBar.enabled = true;
+                        progressOutline.enabled = true;
+                        progressBar.fillAmount = (timer / (startTime + holdTime));
 
                         // Debug.Log(Time.deltaTime);
                         if (timer >= (startTime + holdTime))
                         {
+                            progressBar.fillAmount = 0;
+                            progressBar.enabled = false;
+                            progressOutline.enabled = false;
                             taskList[4] = true;
                             timer = 0;
                             
@@ -186,6 +197,10 @@ public class Tasks : MonoBehaviour
                     else
                     {
                         timer = 0;
+                        progressBar.fillAmount = 0;
+                        progressBar.enabled = false;
+                        progressOutline.enabled = false;
+
                     }
                 }
             }
@@ -206,12 +221,18 @@ public class Tasks : MonoBehaviour
                     if (Input.GetButton("Interact") && player.currentItem.name == "pitchFork")
                     {
                         timer += Time.deltaTime;
+                        progressBar.enabled = true;
+                        progressOutline.enabled = true;
+                        progressBar.fillAmount = (timer / (startTime + holdTime));
 
                         // Debug.Log(Time.deltaTime);
                         if (timer >= (startTime + holdTime))
                         {
                             taskList[5] = true;
                             timer = 0;
+                            progressBar.fillAmount = 0;
+                            progressBar.enabled = false;
+                            progressOutline.enabled = false;
                             Destroy(player.hitInfo.collider.gameObject);
                             Destroy(player.currentItem);
                             player.currentlyHolding = false;
@@ -223,6 +244,9 @@ public class Tasks : MonoBehaviour
                     }
                     else
                     {
+                        progressBar.fillAmount = 0;
+                        progressBar.enabled = false;
+                        progressOutline.enabled = false;
                         timer = 0;
                     }
                 }
@@ -244,12 +268,18 @@ public class Tasks : MonoBehaviour
                     if (Input.GetButton("Interact") && player.currentItem.name == "broom")
                     {
                         timer += Time.deltaTime;
+                        progressBar.enabled = true;
+                        progressOutline.enabled = true;
+                        progressBar.fillAmount = (timer / (startTime + holdTime));
 
                         // Debug.Log(Time.deltaTime);
                         if (timer >= (startTime + holdTime))
                         {
                             taskList[6] = true;
                             timer = 0;
+                            progressBar.fillAmount = 0;
+                            progressBar.enabled = false;
+                            progressOutline.enabled = false;
                             player.hitInfo.collider.GetComponent<Renderer>().material = cleanMatt;
                             Destroy(player.currentItem);
                             player.currentlyHolding = false;
@@ -257,11 +287,13 @@ public class Tasks : MonoBehaviour
                             player.currentItem.name = "Empty";
                             Debug.Log("matt Cleaned");
                             farmer.check++;
-
                         }
                     }
                     else
                     {
+                        progressBar.fillAmount = 0;
+                        progressBar.enabled = false;
+                        progressOutline.enabled = false;
                         timer = 0;
                     }
                 }
