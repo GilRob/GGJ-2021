@@ -31,6 +31,11 @@ public class Tasks : MonoBehaviour
     public Image progressOutline;
     //public int[] dialogues;
     //public int element;
+
+    Animator toiletBrushAnim;
+    Animator broomAnim;
+    Animator pitchForkAnim;
+
     ///////////////////////////////////
 
     void Start()
@@ -48,6 +53,14 @@ public class Tasks : MonoBehaviour
         {
             taskList[i] = false;
         }
+
+        toiletBrushAnim = GameObject.Find("toiletBrush").GetComponent<Animator>();
+        broomAnim = GameObject.Find("broom").GetComponent<Animator>();
+        pitchForkAnim = GameObject.Find("pitchFork").GetComponent<Animator>();
+
+        toiletBrushAnim.enabled = false;
+        broomAnim.enabled = false;
+        pitchForkAnim.enabled = false;
 
         fade.canvasRenderer.SetAlpha(0.0f);
     }
@@ -170,6 +183,7 @@ public class Tasks : MonoBehaviour
                     if (Input.GetButton("Interact") && player.currentItem.name == "toiletBrush")
                     {
                         timer += Time.deltaTime;
+                        toiletBrushAnim.enabled = true;
                         progressBar.enabled = true;
                         progressOutline.enabled = true;
                         progressBar.fillAmount = (timer / (startTime + holdTime));
@@ -180,6 +194,7 @@ public class Tasks : MonoBehaviour
                             progressBar.fillAmount = 0;
                             progressBar.enabled = false;
                             progressOutline.enabled = false;
+                            toiletBrushAnim.enabled = false;
                             taskList[4] = true;
                             timer = 0;
                             
@@ -200,7 +215,7 @@ public class Tasks : MonoBehaviour
                         progressBar.fillAmount = 0;
                         progressBar.enabled = false;
                         progressOutline.enabled = false;
-
+                        toiletBrushAnim.enabled = false;
                     }
                 }
             }
@@ -223,6 +238,7 @@ public class Tasks : MonoBehaviour
                         timer += Time.deltaTime;
                         progressBar.enabled = true;
                         progressOutline.enabled = true;
+                        pitchForkAnim.enabled = true;
                         progressBar.fillAmount = (timer / (startTime + holdTime));
 
                         // Debug.Log(Time.deltaTime);
@@ -233,6 +249,7 @@ public class Tasks : MonoBehaviour
                             progressBar.fillAmount = 0;
                             progressBar.enabled = false;
                             progressOutline.enabled = false;
+                            pitchForkAnim.enabled = false;
                             Destroy(player.hitInfo.collider.gameObject);
                             Destroy(player.currentItem);
                             player.currentlyHolding = false;
@@ -247,6 +264,7 @@ public class Tasks : MonoBehaviour
                         progressBar.fillAmount = 0;
                         progressBar.enabled = false;
                         progressOutline.enabled = false;
+                        pitchForkAnim.enabled = false;
                         timer = 0;
                     }
                 }
@@ -270,6 +288,7 @@ public class Tasks : MonoBehaviour
                         timer += Time.deltaTime;
                         progressBar.enabled = true;
                         progressOutline.enabled = true;
+                         broomAnim.enabled = true;
                         progressBar.fillAmount = (timer / (startTime + holdTime));
 
                         // Debug.Log(Time.deltaTime);
@@ -280,6 +299,7 @@ public class Tasks : MonoBehaviour
                             progressBar.fillAmount = 0;
                             progressBar.enabled = false;
                             progressOutline.enabled = false;
+                             broomAnim.enabled = false;
                             player.hitInfo.collider.GetComponent<Renderer>().material = cleanMatt;
                             Destroy(player.currentItem);
                             player.currentlyHolding = false;
@@ -294,6 +314,7 @@ public class Tasks : MonoBehaviour
                         progressBar.fillAmount = 0;
                         progressBar.enabled = false;
                         progressOutline.enabled = false;
+                         broomAnim.enabled = false;
                         timer = 0;
                     }
                 }
