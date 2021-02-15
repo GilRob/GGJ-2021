@@ -8,6 +8,7 @@ public class Tasks : MonoBehaviour
 {
     // Start is called before the first frame update
     PlayerController player;
+    CameraController playerCamera;
     CharacterController pMovement;
     public GameObject Hayroll;
     public GameObject Egg;
@@ -36,11 +37,19 @@ public class Tasks : MonoBehaviour
     Animator broomAnim;
     Animator pitchForkAnim;
 
+    public GameObject FarmerIdle;
+    public GameObject FarmerChase;
+    public Transform FarmerSpawn;
+
+    float t = 0.0f;
+    bool doLerp = false;
+
     ///////////////////////////////////
 
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
+        playerCamera = GameObject.FindObjectOfType<CameraController>();
         farmer = GameObject.FindObjectOfType<Farmer>();
         pMovement = GameObject.FindObjectOfType<CharacterController>();
         
@@ -56,7 +65,7 @@ public class Tasks : MonoBehaviour
 
         toiletBrushAnim = GameObject.Find("toiletBrush").GetComponentInChildren<Animator>();
         broomAnim = GameObject.Find("broom").GetComponent<Animator>();
-        pitchForkAnim = GameObject.Find("pitchFork").GetComponent<Animator>();
+        //pitchForkAnim = GameObject.Find("pitchFork").GetComponent<Animator>();
 
         toiletBrushAnim.enabled = false;
         broomAnim.enabled = false;
@@ -68,7 +77,15 @@ public class Tasks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(t <= 1 && doLerp == true)
+        {
+            //Quaternion lookOnLook = Quaternion.LookRotation(FarmerSpawn.position - transform.position);
+            //transform.localRotation = Quaternion.Slerp(transform.localRotation, lookOnLook, t);
+            //Vector3 lTargetDir = FarmerSpawn.position - transform.position;
+            //lTargetDir.y = 0.0f;
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.time * 1.0f);
+            t += 0.2f * Time.deltaTime;
+        }
 
         //Debug.Log(player.currentItem);
         ////////////////////////////////////////////////////////////////////////////////////
@@ -238,7 +255,7 @@ public class Tasks : MonoBehaviour
                         timer += Time.deltaTime;
                         progressBar.enabled = true;
                         progressOutline.enabled = true;
-                        pitchForkAnim.enabled = true;
+                        //pitchForkAnim.enabled = true;
                         progressBar.fillAmount = (timer / (startTime + holdTime));
 
                         // Debug.Log(Time.deltaTime);
@@ -249,7 +266,7 @@ public class Tasks : MonoBehaviour
                             progressBar.fillAmount = 0;
                             progressBar.enabled = false;
                             progressOutline.enabled = false;
-                            pitchForkAnim.enabled = false;
+                            //pitchForkAnim.enabled = false;
                             Destroy(player.hitInfo.collider.gameObject);
                             Destroy(player.currentItem);
                             player.currentlyHolding = false;
@@ -264,7 +281,7 @@ public class Tasks : MonoBehaviour
                         progressBar.fillAmount = 0;
                         progressBar.enabled = false;
                         progressOutline.enabled = false;
-                        pitchForkAnim.enabled = false;
+                        //pitchForkAnim.enabled = false;
                         timer = 0;
                     }
                 }
@@ -335,6 +352,7 @@ public class Tasks : MonoBehaviour
                         player.currentItem.name = "Empty";
                         gasCanister.tag = "Interactable";
                         dialogues.Show("Yo that's crazy still", "Player", 4, true);
+                        StartCoroutine(SpawnFarmer());
                     }
                 }
             }
@@ -559,4 +577,19 @@ public class Tasks : MonoBehaviour
         fade.CrossFadeAlpha(1, 2, false);
     }
     //////////////////////////////////////////////////////////////////////////////
+    IEnumerator SpawnFarmer()
+    {
+        FarmerIdle.transform.position = FarmerSpawn.position;
+        FarmerIdle.transform.rotation = FarmerSpawn.rotation;
+        yield return new WaitForSeconds(2f); 
+        player.canMove = false;
+        playerCamera.canRotate = false;
+        //transform.LookAt(FarmerSpawn.position);
+        //doLerp = true;
+        yield return new WaitForSeconds(3f);  
+        FarmerIdle.SetActive(false);
+        Instantiate(FarmerChase, FarmerSpawn.position, FarmerSpawn.rotation);
+        player.canMove = true;
+        playerCamera.canRotate = true;
+    }
 }

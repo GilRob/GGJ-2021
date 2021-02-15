@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     public bool isCrouching = false;
     public bool isJumping = false;
     public bool isStop;
+    [HideInInspector]
+    public bool canMove = true;
 
     public Image fill;
     public Image bar;
@@ -62,6 +64,9 @@ public class PlayerController : MonoBehaviour
 
     public DialogueWindow dialogues;
 
+    Vector3 direct;
+    float x;
+    float y;
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
@@ -88,11 +93,14 @@ public class PlayerController : MonoBehaviour
             velocity.y = -2f;
         }
 
-        // move with keyboard & controller, reduce stamina when running
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        Vector3 direct = transform.right * x + transform.forward * y;
+        if(canMove == true)
+        {
+            // move with keyboard & controller, reduce stamina when running
+            x = Input.GetAxis("Horizontal");
+            y = Input.GetAxis("Vertical");
+            
+            direct = transform.right * x + transform.forward * y;
+        }
 
         if (Input.GetButtonDown("Crouch"))
         {

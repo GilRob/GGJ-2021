@@ -17,9 +17,12 @@ public class CameraController : MonoBehaviour
 
     public float shakingSpeed = 0.18f;
     public float shakingAmount = 0.2f;
-
     public float crouchReducedHeight = 0.7f;
+
+    public bool canRotate = true;
     float originalHeight;
+    float x;
+    float y;
 
     void Start()
     {
@@ -30,9 +33,12 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        // rotate camera with mouse & controller
-        float x = Input.GetAxis("Mouse X") * rotateSpeed;
-        float y = Input.GetAxis("Mouse Y") * rotateSpeed;
+        if(canRotate == true)
+        {
+            // rotate camera with mouse & controller
+            x = Input.GetAxis("Mouse X") * rotateSpeed;
+            y = Input.GetAxis("Mouse Y") * rotateSpeed;
+        }
 
         xRotate -= y;
         xRotate = Mathf.Clamp(xRotate, -90f, 90f);
