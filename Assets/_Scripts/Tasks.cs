@@ -40,9 +40,11 @@ public class Tasks : MonoBehaviour
     public GameObject FarmerIdle;
     public GameObject FarmerChase;
     public Transform FarmerSpawn;
+    public Transform FarmerLookAt;
 
     float t = 0.0f;
     bool doLerp = false;
+    float xRotate = 0f;
 
     ///////////////////////////////////
 
@@ -79,13 +81,27 @@ public class Tasks : MonoBehaviour
     {
         if(t <= 1 && doLerp == true)
         {
-            //Quaternion lookOnLook = Quaternion.LookRotation(FarmerSpawn.position - transform.position);
-            //transform.localRotation = Quaternion.Slerp(transform.localRotation, lookOnLook, t);
-            //Vector3 lTargetDir = FarmerSpawn.position - transform.position;
-            //lTargetDir.y = 0.0f;
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.time * 1.0f);
-            t += 0.2f * Time.deltaTime;
+            //Quaternion lookOnLook = Quaternion.LookRotation(FarmerLookAt.position - transform.position);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, lookOnLook, t);
+            
+            Vector3 lTargetDir = FarmerLookAt.position - transform.position;
+            lTargetDir.y = 0.0f;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime * 200f);
+            Camera.main.transform.localRotation = new Quaternion(0f, 0f, 0f,0f);
+            t += 0.5f * Time.deltaTime;
         }
+        else if(t >= 1 && doLerp == true)
+        {
+            playerCamera.xRotate = 0;
+            Camera.main.transform.localRotation = new Quaternion(0f, 0f, 0f,0f);
+            player.canMove = true;
+            playerCamera.canRotate = true;
+            doLerp = false;
+        }
+        //else if(t > 1)
+        //{
+        //    transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0f, 0f);
+        //}
 
         //Debug.Log(player.currentItem);
         ////////////////////////////////////////////////////////////////////////////////////
@@ -579,17 +595,16 @@ public class Tasks : MonoBehaviour
     //////////////////////////////////////////////////////////////////////////////
     IEnumerator SpawnFarmer()
     {
+        player.canMove = false;
+        playerCamera.canRotate = false;
         FarmerIdle.transform.position = FarmerSpawn.position;
         FarmerIdle.transform.rotation = FarmerSpawn.rotation;
         yield return new WaitForSeconds(2f); 
-        player.canMove = false;
-        playerCamera.canRotate = false;
+        
         //transform.LookAt(FarmerSpawn.position);
-        //doLerp = true;
+        doLerp = true;
         yield return new WaitForSeconds(3f);  
         FarmerIdle.SetActive(false);
         Instantiate(FarmerChase, FarmerSpawn.position, FarmerSpawn.rotation);
-        player.canMove = true;
-        playerCamera.canRotate = true;
     }
 }

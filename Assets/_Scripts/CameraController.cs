@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
     public float rotateSpeed;
     public Transform player;
 
-    float xRotate = 0f;
+    public float xRotate = 0f;
 
     private float timer = 0.0f;
     public float walkShakingSpeed;
@@ -21,8 +21,11 @@ public class CameraController : MonoBehaviour
 
     public bool canRotate = true;
     float originalHeight;
-    float x;
-    float y;
+
+    [HideInInspector]
+    public float x;
+    [HideInInspector]
+    public float y;
 
     void Start()
     {
