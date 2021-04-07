@@ -8,6 +8,7 @@ public class Tasks : MonoBehaviour
 {
     // Start is called before the first frame update
     PlayerController player;
+    CameraController playerCamera;
     CharacterController pMovement;
     public GameObject Hayroll;
     public GameObject Egg;
@@ -31,11 +32,26 @@ public class Tasks : MonoBehaviour
     public Image progressOutline;
     //public int[] dialogues;
     //public int element;
+
+    Animator toiletBrushAnim;
+    Animator broomAnim;
+    Animator pitchForkAnim;
+
+    public GameObject FarmerIdle;
+    public GameObject FarmerChase;
+    public Transform FarmerSpawn;
+    public Transform FarmerLookAt;
+
+    float t = 0.0f;
+    bool doLerp = false;
+    float xRotate = 0f;
+
     ///////////////////////////////////
 
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerController>();
+        playerCamera = GameObject.FindObjectOfType<CameraController>();
         farmer = GameObject.FindObjectOfType<Farmer>();
         pMovement = GameObject.FindObjectOfType<CharacterController>();
         
@@ -49,13 +65,43 @@ public class Tasks : MonoBehaviour
             taskList[i] = false;
         }
 
+        toiletBrushAnim = GameObject.Find("toiletBrush").GetComponentInChildren<Animator>();
+        broomAnim = GameObject.Find("broom").GetComponent<Animator>();
+        //pitchForkAnim = GameObject.Find("pitchFork").GetComponent<Animator>();
+
+        toiletBrushAnim.enabled = false;
+        broomAnim.enabled = false;
+        pitchForkAnim.enabled = false;
+
         fade.canvasRenderer.SetAlpha(0.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(t <= 1 && doLerp == true)
+        {
+            //Quaternion lookOnLook = Quaternion.LookRotation(FarmerLookAt.position - transform.position);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, lookOnLook, t);
+            
+            Vector3 lTargetDir = FarmerLookAt.position - transform.position;
+            lTargetDir.y = 0.0f;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime * 200f);
+            Camera.main.transform.localRotation = new Quaternion(0f, 0f, 0f,0f);
+            t += 0.5f * Time.deltaTime;
+        }
+        else if(t >= 1 && doLerp == true)
+        {
+            playerCamera.xRotate = 0;
+            Camera.main.transform.localRotation = new Quaternion(0f, 0f, 0f,0f);
+            player.canMove = true;
+            playerCamera.canRotate = true;
+            doLerp = false;
+        }
+        //else if(t > 1)
+        //{
+        //    transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0f, 0f);
+        //}
 
         //Debug.Log(player.currentItem);
         ////////////////////////////////////////////////////////////////////////////////////
@@ -170,6 +216,7 @@ public class Tasks : MonoBehaviour
                     if (Input.GetButton("Interact") && player.currentItem.name == "toiletBrush")
                     {
                         timer += Time.deltaTime;
+                        toiletBrushAnim.enabled = true;
                         progressBar.enabled = true;
                         progressOutline.enabled = true;
                         progressBar.fillAmount = (timer / (startTime + holdTime));
@@ -180,6 +227,7 @@ public class Tasks : MonoBehaviour
                             progressBar.fillAmount = 0;
                             progressBar.enabled = false;
                             progressOutline.enabled = false;
+                            toiletBrushAnim.enabled = false;
                             taskList[4] = true;
                             timer = 0;
                             
@@ -200,7 +248,7 @@ public class Tasks : MonoBehaviour
                         progressBar.fillAmount = 0;
                         progressBar.enabled = false;
                         progressOutline.enabled = false;
-
+                        toiletBrushAnim.enabled = false;
                     }
                 }
             }
@@ -223,6 +271,7 @@ public class Tasks : MonoBehaviour
                         timer += Time.deltaTime;
                         progressBar.enabled = true;
                         progressOutline.enabled = true;
+                        //pitchForkAnim.enabled = true;
                         progressBar.fillAmount = (timer / (startTime + holdTime));
 
                         // Debug.Log(Time.deltaTime);
@@ -233,6 +282,7 @@ public class Tasks : MonoBehaviour
                             progressBar.fillAmount = 0;
                             progressBar.enabled = false;
                             progressOutline.enabled = false;
+                            //pitchForkAnim.enabled = false;
                             Destroy(player.hitInfo.collider.gameObject);
                             Destroy(player.currentItem);
                             player.currentlyHolding = false;
@@ -247,6 +297,7 @@ public class Tasks : MonoBehaviour
                         progressBar.fillAmount = 0;
                         progressBar.enabled = false;
                         progressOutline.enabled = false;
+                        //pitchForkAnim.enabled = false;
                         timer = 0;
                     }
                 }
@@ -270,6 +321,7 @@ public class Tasks : MonoBehaviour
                         timer += Time.deltaTime;
                         progressBar.enabled = true;
                         progressOutline.enabled = true;
+                         broomAnim.enabled = true;
                         progressBar.fillAmount = (timer / (startTime + holdTime));
 
                         // Debug.Log(Time.deltaTime);
@@ -280,6 +332,7 @@ public class Tasks : MonoBehaviour
                             progressBar.fillAmount = 0;
                             progressBar.enabled = false;
                             progressOutline.enabled = false;
+                             broomAnim.enabled = false;
                             player.hitInfo.collider.GetComponent<Renderer>().material = cleanMatt;
                             Destroy(player.currentItem);
                             player.currentlyHolding = false;
@@ -294,6 +347,7 @@ public class Tasks : MonoBehaviour
                         progressBar.fillAmount = 0;
                         progressBar.enabled = false;
                         progressOutline.enabled = false;
+                         broomAnim.enabled = false;
                         timer = 0;
                     }
                 }
@@ -314,6 +368,7 @@ public class Tasks : MonoBehaviour
                         player.currentItem.name = "Empty";
                         gasCanister.tag = "Interactable";
                         dialogues.Show("Yo that's crazy still", "Player", 4, true);
+                        StartCoroutine(SpawnFarmer());
                     }
                 }
             }
@@ -366,15 +421,29 @@ public class Tasks : MonoBehaviour
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Sup cow", "Player", 4, true);
-                    dialogues.Show("Moo.", "Cow", 4, true);
+                    dialogues.Show("*moo*", "Cow", 4, true);
                 }
             }
+            if (player.hitInfo.collider.name == "Cow_Cindy")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("*looking into the distance*", "Cow", 4, true);
+                }
+            }
+            if (player.hitInfo.collider.name == "Cow_Cabbage")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("*aggressive moo*", "Cow", 4, true);
+                }
+            }
+
             if (player.hitInfo.collider.name == "rickyPainting")
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Hmph", "Player", 4, true);
+                    dialogues.Show("I don't know who this man is", "Player", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "ChickenWithAnim (4)")
@@ -395,14 +464,14 @@ public class Tasks : MonoBehaviour
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Getting a lot of negative vibes from this", "Player", 4, true);
+                    dialogues.Show("I'm getting a lot of negative energy from this", "Player", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "fossilPainting")
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Kinda cute not gonna lie, love the fossil gurl aesthetic", "Player", 4, true);
+                    dialogues.Show("Looks like she's holding a fossil... I think I'll call her Fossil Gurl", "Player", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "RockingChair")
@@ -439,6 +508,13 @@ public class Tasks : MonoBehaviour
                 if (Input.GetButtonDown("Interact"))
                 {
                     dialogues.Show("Who in their right mind would keep this much smelly trash so close to their house!?", "Player", 4, true);
+                }
+            }
+            if (player.hitInfo.collider.name == "Car")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("You really had to fail me this time, huh?", "Player", 4, true);
                 }
             }
         }
@@ -538,4 +614,18 @@ public class Tasks : MonoBehaviour
         fade.CrossFadeAlpha(1, 2, false);
     }
     //////////////////////////////////////////////////////////////////////////////
+    IEnumerator SpawnFarmer()
+    {
+        player.canMove = false;
+        playerCamera.canRotate = false;
+        FarmerIdle.transform.position = FarmerSpawn.position;
+        FarmerIdle.transform.rotation = FarmerSpawn.rotation;
+        yield return new WaitForSeconds(2f); 
+        
+        //transform.LookAt(FarmerSpawn.position);
+        doLerp = true;
+        yield return new WaitForSeconds(3f);  
+        FarmerIdle.SetActive(false);
+        Instantiate(FarmerChase, FarmerSpawn.position, FarmerSpawn.rotation);
+    }
 }

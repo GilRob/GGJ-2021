@@ -26,4 +26,9 @@ public class Buttons : MonoBehaviour
     {
         SceneManager.LoadScene("MenuFINAL");
     }
+
+    public void playSound()
+    {
+
+    }
 }

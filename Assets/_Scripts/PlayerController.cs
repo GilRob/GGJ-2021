@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     public bool isCrouching = false;
     public bool isJumping = false;
     public bool isStop;
+    public bool isDied = false;
+    [HideInInspector]
+    public bool canMove = true;
 
     public Image fill;
     public Image bar;
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public Sprite baseCursor;
     public Sprite InteractCursor;
     public Sprite InvestigateCursor;
+    public GameObject youDiedScreen;
     //////////////////////////////////
     public Transform axePosition;
     public Transform bucketPosition;
@@ -60,6 +64,11 @@ public class PlayerController : MonoBehaviour
     public AudioClip wheat;
     private int layerMask = ~(1 << 9);
 
+    public DialogueWindow dialogues;
+
+    Vector3 direct;
+    float x;
+    float y;
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
@@ -70,106 +79,130 @@ public class PlayerController : MonoBehaviour
         itemRB = new Rigidbody();
         holdPosition = new GameObject().transform;
         wheatSource = GetComponent<AudioSource>();
+        isDied = false;
+        youDiedScreen.SetActive(false);
     }
 
     void Update()
     {
-        float speed = (transform.position - this.mLastPosition).magnitude / Time.deltaTime;
-        this.mLastPosition = transform.position;
-
-        //Debug.Log(speed);
-
-        // check if player on ground
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDis, groundMask);
-        if(isGrounded && velocity.y < 0)
+        if (isDied)
         {
-            velocity.y = -2f;
+            if(transform.eulerAngles.x <= 85)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x + Time.deltaTime*100, transform.eulerAngles.y, transform.eulerAngles.z);
+            }
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Jump"))
+            {
+                isDied = false;
+                youDiedScreen.SetActive(false);
+                
+                controller.enabled = false;
+                this.transform.position = startPos;
+                this.transform.rotation = startRot;
+                controller.enabled = true;
+            }
         }
-
-        // move with keyboard & controller, reduce stamina when running
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        Vector3 direct = transform.right * x + transform.forward * y;
-
-        if (Input.GetButtonDown("Crouch"))
+        else
         {
-            if (isCrouching)
-                isCrouching = false;
+            float speed = (transform.position - this.mLastPosition).magnitude / Time.deltaTime;
+            this.mLastPosition = transform.position;
+
+            //Debug.Log(speed);
+
+            // check if player on ground
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDis, groundMask);
+            if (isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;
+            }
+
+            if(canMove == true)
+            {
+            // move with keyboard & controller, reduce stamina when running
+                x = Input.GetAxis("Horizontal");
+                y = Input.GetAxis("Vertical");
+
+                direct = transform.right * x + transform.forward * y;
+            }
+
+            if (Input.GetButtonDown("Crouch"))
+            {
+                if (isCrouching)
+                    isCrouching = false;
+                else
+                    isCrouching = true;
+            }
+            if (Input.GetButton("Run") && (x != 0 || y != 0) && !isCrouching)
+            {
+                isRunning = true;
+            }
             else
-                isCrouching = true;
-        }
-        if (Input.GetButton("Run") && (x != 0 || y != 0) && !isCrouching)
-        {
-            isRunning = true;
-        }
-        else
-        {
-            isRunning = false;
-        }
+            {
+                isRunning = false;
+            }
 
-        if (recovering == false)
-            stamina.active = false;
-        else
-            stamina.active = true;
+            if (recovering == false)
+                stamina.active = false;
+            else
+                stamina.active = true;
 
-        if (fill.fillAmount <= 0.01f)
-        {
-            isRunning = false;
+            if (fill.fillAmount <= 0.01f)
+            {
+                isRunning = false;
+            }
+
+            if (fill.fillAmount >= 1)
+                recovering = false;
+            else if (fill.fillAmount < 1)
+                recovering = true;
+
+            if (isRunning)
+            {
+                fill.fillAmount -= staminaReduceSpeed * Time.deltaTime;
+                bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
+            }
+            else
+            {
+                if (x != 0 || y != 0)
+                {
+                    fill.fillAmount += staminaBackupWalking * Time.deltaTime;
+                }
+                else
+                {
+                    fill.fillAmount += staminaBackupStop * Time.deltaTime;
+                }
+                bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
+            }
+
+            if (isRunning)
+            {
+                controller.Move(direct * runningSpeed * Time.deltaTime);
+            }
+            else if (isCrouching)
+            {
+                controller.Move(direct * crouchingSpeed * Time.deltaTime);
+            }
+            else
+            {
+                controller.Move(direct * walkingSpeed * Time.deltaTime);
+            }
+
+            if (x != 0 || y != 0)
+                isStop = false;
+            else
+                isStop = true;
+
+            // jump with keybboard & controller
+            if (Input.GetButtonDown("Jump") && isGrounded && !isCrouching)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * fallingSpeed);
+                isJumping = true;
+            }
+
+            velocity.y += fallingSpeed * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+            Interact();
         }
-
-        if (fill.fillAmount >= 1)
-            recovering = false;
-        else if (fill.fillAmount < 1)
-            recovering = true;
-
-         if (isRunning)
-         {
-             fill.fillAmount -= staminaReduceSpeed * Time.deltaTime;
-             bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
-         }
-         else
-         {
-             if (x != 0 || y != 0)
-             {
-                 fill.fillAmount += staminaBackupWalking * Time.deltaTime;
-             }
-             else
-             {
-                 fill.fillAmount += staminaBackupStop * Time.deltaTime;
-             }
-             bar.transform.localPosition = new Vector3((fill.fillAmount - 0.5f) * 2 * 228, 0, 0);
-         }
-
-        if (isRunning)
-        {
-            controller.Move(direct * runningSpeed * Time.deltaTime);
-        }
-        else if(isCrouching)
-        {
-            controller.Move(direct * crouchingSpeed * Time.deltaTime);
-        }
-        else
-        {
-            controller.Move(direct * walkingSpeed * Time.deltaTime);
-        }
-
-        if (x != 0 || y != 0)
-            isStop = false;
-        else
-            isStop = true;
-
-        // jump with keybboard & controller
-        if(Input.GetButtonDown("Jump") && isGrounded && !isCrouching)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * fallingSpeed);
-            isJumping = true;
-        }
-
-        velocity.y += fallingSpeed * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-        Interact();
-        
     }
 
     void Interact()
@@ -193,7 +226,7 @@ public class PlayerController : MonoBehaviour
                 cursor.sprite = baseCursor;
             }
 
-            if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false)
+            if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "Axe")
             {
                 currentItem = hitInfo.transform.gameObject;
                 
@@ -201,7 +234,48 @@ public class PlayerController : MonoBehaviour
                 currentItem.GetComponent<Rigidbody>().useGravity = false;
                 currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
             }
-            
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "bucket" && dialogues.activeTask == 3)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "toiletBrush" && dialogues.activeTask == 1)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "pitchFork" && dialogues.activeTask == 6)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "broom" && dialogues.activeTask == 2)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "Garb" && dialogues.activeTask == 7)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "GasCan" && dialogues.activeTask == 7)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
         }
         
         if(hitInfo.collider == null)
@@ -295,10 +369,8 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            controller.enabled = false;
-            this.transform.position = startPos;
-            this.transform.rotation = startRot;
-            controller.enabled = true;
+            isDied = true;
+            youDiedScreen.SetActive(true);
         }
     }
 }
