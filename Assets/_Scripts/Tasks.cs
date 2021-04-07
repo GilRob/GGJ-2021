@@ -366,15 +366,29 @@ public class Tasks : MonoBehaviour
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Sup cow", "Player", 4, true);
-                    dialogues.Show("Moo.", "Cow", 4, true);
+                    dialogues.Show("*moo*", "Cow", 4, true);
                 }
             }
+            if (player.hitInfo.collider.name == "Cow_Cindy")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("*looking into the distance*", "Cow", 4, true);
+                }
+            }
+            if (player.hitInfo.collider.name == "Cow_Cabbage")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("*aggressive moo*", "Cow", 4, true);
+                }
+            }
+
             if (player.hitInfo.collider.name == "rickyPainting")
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Hmph", "Player", 4, true);
+                    dialogues.Show("I don't know who this man is", "Player", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "ChickenWithAnim (4)")
@@ -395,14 +409,14 @@ public class Tasks : MonoBehaviour
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Getting a lot of negative vibes from this", "Player", 4, true);
+                    dialogues.Show("I'm getting a lot of negative energy from this", "Player", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "fossilPainting")
             {
                 if (Input.GetButtonDown("Interact"))
                 {
-                    dialogues.Show("Kinda cute not gonna lie, love the fossil gurl aesthetic", "Player", 4, true);
+                    dialogues.Show("Looks like she's holding a fossil... I think I'll call her Fossil Gurl", "Player", 4, true);
                 }
             }
             if (player.hitInfo.collider.name == "RockingChair")
@@ -439,6 +453,13 @@ public class Tasks : MonoBehaviour
                 if (Input.GetButtonDown("Interact"))
                 {
                     dialogues.Show("Who in their right mind would keep this much smelly trash so close to their house!?", "Player", 4, true);
+                }
+            }
+            if (player.hitInfo.collider.name == "Car")
+            {
+                if (Input.GetButtonDown("Interact"))
+                {
+                    dialogues.Show("You really had to fail me this time, huh?", "Player", 4, true);
                 }
             }
         }
