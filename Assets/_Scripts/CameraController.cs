@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
     public float rotateSpeed;
     public Transform player;
 
-    float xRotate = 0f;
+    public float xRotate = 0f;
 
     private float timer = 0.0f;
     public float walkShakingSpeed;
@@ -17,9 +17,15 @@ public class CameraController : MonoBehaviour
 
     public float shakingSpeed = 0.18f;
     public float shakingAmount = 0.2f;
-
     public float crouchReducedHeight = 0.7f;
+
+    public bool canRotate = true;
     float originalHeight;
+
+    [HideInInspector]
+    public float x;
+    [HideInInspector]
+    public float y;
 
     void Start()
     {
@@ -36,9 +42,12 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            // rotate camera with mouse & controller
-            float x = Input.GetAxis("Mouse X") * rotateSpeed;
-            float y = Input.GetAxis("Mouse Y") * rotateSpeed;
+             if(canRotate == true)
+             {
+                // rotate camera with mouse & controller
+                x = Input.GetAxis("Mouse X") * rotateSpeed;
+                y = Input.GetAxis("Mouse Y") * rotateSpeed;
+             }
 
             xRotate -= y;
             xRotate = Mathf.Clamp(xRotate, -90f, 90f);

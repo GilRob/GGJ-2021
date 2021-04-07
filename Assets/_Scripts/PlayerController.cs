@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public bool isJumping = false;
     public bool isStop;
     public bool isDied = false;
+    [HideInInspector]
+    public bool canMove = true;
 
     public Image fill;
     public Image bar;
@@ -62,6 +64,11 @@ public class PlayerController : MonoBehaviour
     public AudioClip wheat;
     private int layerMask = ~(1 << 9);
 
+    public DialogueWindow dialogues;
+
+    Vector3 direct;
+    float x;
+    float y;
     void Start()
     {
         controller = this.GetComponent<CharacterController>();
@@ -109,11 +116,14 @@ public class PlayerController : MonoBehaviour
                 velocity.y = -2f;
             }
 
+            if(canMove == true)
+            {
             // move with keyboard & controller, reduce stamina when running
-            float x = Input.GetAxis("Horizontal");
-            float y = Input.GetAxis("Vertical");
+                x = Input.GetAxis("Horizontal");
+                y = Input.GetAxis("Vertical");
 
-            Vector3 direct = transform.right * x + transform.forward * y;
+                direct = transform.right * x + transform.forward * y;
+            }
 
             if (Input.GetButtonDown("Crouch"))
             {
@@ -216,7 +226,7 @@ public class PlayerController : MonoBehaviour
                 cursor.sprite = baseCursor;
             }
 
-            if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false)
+            if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "Axe")
             {
                 currentItem = hitInfo.transform.gameObject;
                 
@@ -224,7 +234,48 @@ public class PlayerController : MonoBehaviour
                 currentItem.GetComponent<Rigidbody>().useGravity = false;
                 currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
             }
-            
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "bucket" && dialogues.activeTask == 3)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "toiletBrush" && dialogues.activeTask == 1)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "pitchFork" && dialogues.activeTask == 6)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "broom" && dialogues.activeTask == 2)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "Garb" && dialogues.activeTask == 7)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+            else if(Input.GetButtonDown("Interact") && hitInfo.collider.tag == "Interactable" && currentlyHolding == false && hitInfo.collider.name == "GasCan" && dialogues.activeTask == 7)
+            {
+                currentItem = hitInfo.transform.gameObject;
+                currentlyHolding = true;
+                currentItem.GetComponent<Rigidbody>().useGravity = false;
+                currentItem.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
         }
         
         if(hitInfo.collider == null)
